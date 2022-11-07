@@ -1,0 +1,375 @@
+From a18776245a7c4231f3c68fa7eb64c0503b98ebec Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Mon, 7 Nov 2022 17:00:38 +0800
+Subject: [PATCH] [gnk-g2l] support smarc-rzg2l-gnk board
+
+---
+ arch/arm/dts/Makefile               |   3 +-
+ arch/arm/dts/smarc-rzg2l-gnk.dts    | 118 ++++++++++++++++++++++++++++
+ arch/arm/mach-rmobile/Kconfig.64    |   5 ++
+ board/renesas/rzg2l-dev/Kconfig     |  15 ++++
+ board/renesas/rzg2l-dev/rzg2l-dev.c |   2 +-
+ configs/smarc-rzg2l-gnk_defconfig   |  78 ++++++++++++++++++
+ include/configs/smarc-rzg2l-gnk.h   |  77 ++++++++++++++++++
+ 7 files changed, 296 insertions(+), 2 deletions(-)
+ create mode 100644 arch/arm/dts/smarc-rzg2l-gnk.dts
+ create mode 100644 configs/smarc-rzg2l-gnk_defconfig
+ create mode 100644 include/configs/smarc-rzg2l-gnk.h
+
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index 428f91c5..f566afc7 100644
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -932,7 +932,8 @@ dtb-$(CONFIG_RCAR_GEN3) += \
+ 	rzg2ul-type1-ddr3l-dev.dtb \
+ 	rzg2ul-type2-dev.dtb \
+ 	smarc-rzg2ul.dtb \
+-	smarc-rzv2l-gnk.dtb
++	smarc-rzv2l-gnk.dtb \
++	smarc-rzg2l-gnk.dtb
+ 
+ ifdef CONFIG_RCAR_GEN3
+ DTC_FLAGS += -R 4 -p 0x1000
+diff --git a/arch/arm/dts/smarc-rzg2l-gnk.dts b/arch/arm/dts/smarc-rzg2l-gnk.dts
+new file mode 100644
+index 00000000..4529e5d8
+--- /dev/null
++++ b/arch/arm/dts/smarc-rzg2l-gnk.dts
+@@ -0,0 +1,118 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Device Tree Source for the GNK board
++ *
++ * Copyright (C) 2017 Jacopo Mondi <jacopo+renesas@jmondi.org>
++ * Copyright (C) 2016 Renesas Electronics
++ * slash.liunx.c@gmail.com
++ */
++
++/dts-v1/;
++#include <dt-bindings/gpio/gpio.h>
++#include "r9a07g044l.dtsi"
++#include "r9a07g044l-u-boot.dtsi"
++#include <dt-bindings/pinctrl/rzg2l-pinctrl.h>
++
++/ {
++	model = "smarc-rzg2l";
++	compatible = "renesas,r9a07g044l", "renesas,rzg2l";
++
++	aliases {
++		serial0 = &scif0;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
++	memory@48000000 {
++		device_type = "memory";
++		/* first 128MB is reserved for secure area. */
++		reg = <0 0x48000000 0 0x38000000>;
++	};
++
++};
++
++&pinctrl {
++	eth0_pins: eth0 {
++		pinmux = <RZG2L_PINMUX(20, 0, 1)>,
++				<RZG2L_PINMUX(20, 1, 1)>,
++				<RZG2L_PINMUX(20, 2, 1)>,
++				<RZG2L_PINMUX(21, 0, 1)>,
++				<RZG2L_PINMUX(21, 1, 1)>,
++				<RZG2L_PINMUX(22, 0, 1)>,
++				<RZG2L_PINMUX(22, 1, 1)>,
++				<RZG2L_PINMUX(23, 0, 1)>,
++				<RZG2L_PINMUX(23, 1, 1)>,
++				<RZG2L_PINMUX(24, 0, 1)>,
++				<RZG2L_PINMUX(24, 1, 1)>,
++				<RZG2L_PINMUX(25, 0, 1)>,
++				<RZG2L_PINMUX(25, 1, 1)>,
++				<RZG2L_PINMUX(26, 0, 1)>,
++				<RZG2L_PINMUX(26, 1, 1)>,
++				<RZG2L_PINMUX(27, 0, 1)>,
++				<RZG2L_PINMUX(27, 1, 1)>,
++				<RZG2L_PINMUX(28, 0, 1)>,
++				<RZG2L_PINMUX(28, 1, 1)>;
++	};
++
++	i2c1_pins: i2c1 {
++		pinmux = <RZG2L_PINMUX(14, 2, 1)>,
++				<RZG2L_PINMUX(14, 3, 1)>;
++	};
++
++};
++
++&xinclk {
++        clock-frequency = <24000000>;
++};
++
++&scif0 {
++	status = "okay";
++	clock = <100000000>;
++};
++
++&sdhi0 {
++	/* pinctrl placeholder
++	 * If this channel is used for interfacing with a SD card, a power enable
++	 * pin (SD0_PWR_EN) must be defined.
++	 * The SD0_PWR_EN pin is associated with P4_1.
++	 * A HIGH signal on SD0_PWR_EN will enable supply voltage for SD card.
++	*/
++	bus-width = <8>;
++	status = "okay";
++};
++
++&sdhi1 {
++	/* pinctrl placeholder
++	 * A power enable pin (SD1_PWR_EN) must be defined to interface with a
++	 * SD card.
++	 * The SD1_PWR_EN pin is associated with P39_2.
++	 * A HIGH signal on SD1_PWR_EN will enable supply voltage for SD card.
++	*/
++	bus-width = <4>;
++	status = "okay";
++};
++
++&eth0 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&eth0_pins>;
++	status = "okay";
++
++	phy-handle = <&phy0>;
++	phy-mode = "rgmii";
++	phy0: ethernet-phy@7 {
++		reg = <7>;
++	};
++};
++
++&i2c1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c1_pins>;
++	status = "okay";
++
++	adv7535: hdmi@3d {
++		compatible = "adi,adv7535";
++		reg = <0x3d>;
++	};
++};
+diff --git a/arch/arm/mach-rmobile/Kconfig.64 b/arch/arm/mach-rmobile/Kconfig.64
+index 91910844..6d9b0602 100644
+--- a/arch/arm/mach-rmobile/Kconfig.64
++++ b/arch/arm/mach-rmobile/Kconfig.64
+@@ -197,6 +197,11 @@ config TARGET_SMARC_RZV2L_GNK
+ 	help
+           Support for Renesas RZ/V2L Dev Platform
+ 
++config TARGET_SMARC_RZG2L_GNK
++	bool "RZ/G2L GNK board"
++	help
++          Support for Renesas RZ/G2L Dev Platform
++
+ config TARGET_RZG2LC_DEV
+ 	bool "RZ/G2LC Dev board"
+ 	help
+diff --git a/board/renesas/rzg2l-dev/Kconfig b/board/renesas/rzg2l-dev/Kconfig
+index ecde495a..9a8941a7 100644
+--- a/board/renesas/rzg2l-dev/Kconfig
++++ b/board/renesas/rzg2l-dev/Kconfig
+@@ -30,3 +30,18 @@ config SYS_CONFIG_NAME
+ 
+ endif
+ 
++if TARGET_SMARC_RZG2L_GNK
++
++config SYS_SOC
++	default "rmobile"
++
++config SYS_BOARD
++	default "rzg2l-dev"
++
++config SYS_VENDOR
++	default "renesas"
++
++config SYS_CONFIG_NAME
++	default "smarc-rzg2l-gnk"
++
++endif
+diff --git a/board/renesas/rzg2l-dev/rzg2l-dev.c b/board/renesas/rzg2l-dev/rzg2l-dev.c
+index 49e8d9d1..ea0b9c14 100644
+--- a/board/renesas/rzg2l-dev/rzg2l-dev.c
++++ b/board/renesas/rzg2l-dev/rzg2l-dev.c
+@@ -51,7 +51,7 @@ void s_init(void)
+ 	/* SD1 power control: P39_1 = 0; P39_2 = 1; */
+ 	*(volatile u32 *)(PFC_PMC37) &= 0xFFFFFFF9; /* Port func mode 0b00 */
+ 	*(volatile u32 *)(PFC_PM37) = (*(volatile u32 *)(PFC_PM37) & 0xFFFFFFC3) | 0x28; /* Port output mode 0b1010 */
+-#if CONFIG_TARGET_SMARC_RZG2L
++#if CONFIG_TARGET_SMARC_RZG2L || CONFIG_TARGET_SMARC_RZG2L_GNK
+ 	*(volatile u32 *)(PFC_P37) = (*(volatile u32 *)(PFC_P37) & 0xFFFFFFF9) | 0x6;	/* Port 39[2:1] output value 0b11*/
+ #else
+ 
+diff --git a/configs/smarc-rzg2l-gnk_defconfig b/configs/smarc-rzg2l-gnk_defconfig
+new file mode 100644
+index 00000000..a5d66282
+--- /dev/null
++++ b/configs/smarc-rzg2l-gnk_defconfig
+@@ -0,0 +1,78 @@
++CONFIG_ARM=y
++CONFIG_ARCH_CPU_INIT=y
++CONFIG_ARCH_RMOBILE=y
++CONFIG_SYS_TEXT_BASE=0x50000000
++CONFIG_ENV_SIZE=0x20000
++CONFIG_ENV_OFFSET=0xFFFE0000
++CONFIG_DM_GPIO=y
++CONFIG_RCAR_GEN3=y
++CONFIG_R9A07G044L=y
++CONFIG_TARGET_SMARC_RZG2L_GNK=y
++CONFIG_DEFAULT_DEVICE_TREE="smarc-rzg2l-gnk"
++CONFIG_SMBIOS_PRODUCT_NAME=""
++CONFIG_SPL=n
++CONFIG_FIT=y
++CONFIG_USE_BOOTARGS=y
++CONFIG_BOOTARGS="rw rootwait earlycon root=/dev/mmcblk0p1"
++CONFIG_SUPPORT_RAW_INITRD=y
++CONFIG_DEFAULT_FDT_FILE="smarc-rzg2l-gnk.dtb"
++CONFIG_VERSION_VARIABLE=y
++CONFIG_HUSH_PARSER=y
++CONFIG_CMD_BOOTZ=y
++CONFIG_CMD_GPIO=y
++CONFIG_CMD_I2C=y
++CONFIG_CMD_MMC=y
++CONFIG_CMD_PCI=y
++CONFIG_CMD_USB=y
++CONFIG_CMD_DHCP=y
++CONFIG_CMD_MII=y
++CONFIG_CMD_PING=y
++CONFIG_CMD_EXT2=y
++CONFIG_CMD_EXT4=y
++CONFIG_CMD_EXT4_WRITE=y
++CONFIG_CMD_FAT=y
++CONFIG_CMD_FS_GENERIC=y
++CONFIG_OF_CONTROL=y
++CONFIG_OF_LIST="smarc-rzg2l-gnk"
++CONFIG_MULTI_DTB_FIT_LZO=y
++CONFIG_MULTI_DTB_FIT_USER_DEFINED_AREA=y
++CONFIG_ENV_OVERWRITE=y
++CONFIG_SYS_RELOC_GD_ENV_ADDR=y
++CONFIG_REGMAP=y
++CONFIG_SYSCON=y
++CONFIG_CLK=y
++CONFIG_CLK_RENESAS=y
++CONFIG_CLK_R9A07G044L=y
++CONFIG_RCAR_GPIO=y
++CONFIG_PINCTRL_PFC_RZG2L=y
++CONFIG_RZG2L_GPIO=y
++CONFIG_DM_I2C=y
++CONFIG_SYS_I2C_RCAR_IIC=y
++CONFIG_SH_SDHI=y
++CONFIG_BITBANGMII=y
++CONFIG_PHY_MICREL=y
++CONFIG_PHY_MICREL_KSZ90X1=y
++CONFIG_DM_ETH=y
++CONFIG_RENESAS_RAVB=y
++CONFIG_PCI=y
++CONFIG_DM_PCI=y
++CONFIG_PCI_RCAR_GEN3=y
++CONFIG_DM_REGULATOR=y
++CONFIG_DM_REGULATOR_FIXED=y
++CONFIG_DM_REGULATOR_GPIO=y
++CONFIG_SCIF_CONSOLE=y
++CONFIG_TEE=y
++CONFIG_OPTEE=y
++CONFIG_USB=y
++CONFIG_DM_USB=y
++CONFIG_USB_XHCI_HCD=y
++CONFIG_USB_EHCI_HCD=y
++CONFIG_USB_EHCI_GENERIC=y
++CONFIG_USB_STORAGE=y
++CONFIG_OF_LIBFDT_OVERLAY=y
++CONFIG_SMBIOS_MANUFACTURER=""
++CONFIG_ENV_IS_IN_MMC=y
++CONFIG_SYS_RELOC_GD_ENV_ADDR=y
++CONFIG_SYS_MMC_ENV_DEV=0
++CONFIG_SYS_MMC_ENV_PART=2
++CONFIG_SYS_I2C_RZG2L_RIIC=y
+diff --git a/include/configs/smarc-rzg2l-gnk.h b/include/configs/smarc-rzg2l-gnk.h
+new file mode 100644
+index 00000000..af3b2563
+--- /dev/null
++++ b/include/configs/smarc-rzg2l-gnk.h
+@@ -0,0 +1,77 @@
++/* SPDX-License-Identifier: GPL-2.0+ */
++/*
++ * Copyright (C) 2015 Renesas Electronics Corporation
++ */
++
++#ifndef __SMARC_RZG2L_GNK_H
++#define __SMARC_RZG2L_GNK_H
++
++#include <asm/arch/rmobile.h>
++
++#define CONFIG_REMAKE_ELF
++
++#ifdef CONFIG_SPL
++#define CONFIG_SPL_TARGET	"spl/u-boot-spl.scif"
++#endif
++
++/* boot option */
++
++#define CONFIG_CMDLINE_TAG
++#define CONFIG_SETUP_MEMORY_TAGS
++#define CONFIG_INITRD_TAG
++
++/* Generic Interrupt Controller Definitions */
++/* RZ/G2L use GIC-v3 */
++#define CONFIG_GICV3
++#define GICD_BASE	0x11900000
++#define GICR_BASE	0x11960000
++
++/* console */
++#define CONFIG_SYS_CBSIZE		2048
++#define CONFIG_SYS_BARGSIZE		CONFIG_SYS_CBSIZE
++#define CONFIG_SYS_MAXARGS		64
++#define CONFIG_SYS_BAUDRATE_TABLE	{ 115200, 38400 }
++
++/* PHY needs a longer autoneg timeout */
++#define PHY_ANEG_TIMEOUT		20000
++
++/* MEMORY */
++#define CONFIG_SYS_INIT_SP_ADDR		CONFIG_SYS_TEXT_BASE
++
++/* SDHI clock freq */
++#define CONFIG_SH_SDHI_FREQ		133000000
++
++#define DRAM_RSV_SIZE			0x08000000
++#define CONFIG_SYS_SDRAM_BASE		(0x40000000 + DRAM_RSV_SIZE)
++#define CONFIG_SYS_SDRAM_SIZE		(0x40000000u - DRAM_RSV_SIZE) //total 2GB
++#define CONFIG_SYS_LOAD_ADDR		0x58000000
++#define CONFIG_LOADADDR			CONFIG_SYS_LOAD_ADDR // Default load address for tfpt,bootp...
++#define CONFIG_VERY_BIG_RAM
++#define CONFIG_MAX_MEM_MAPPED		(0x40000000u - DRAM_RSV_SIZE)
++
++#define CONFIG_SYS_MONITOR_BASE		0x00000000
++#define CONFIG_SYS_MONITOR_LEN		(1 * 1024 * 1024)
++#define CONFIG_SYS_MALLOC_LEN		(64 * 1024 * 1024)
++#define CONFIG_SYS_BOOTM_LEN		(64 << 20)
++
++/* The HF/QSPI layout permits up to 1 MiB large bootloader blob */
++#define CONFIG_BOARD_SIZE_LIMIT		1048576
++
++/* ENV setting */
++
++#define CONFIG_EXTRA_ENV_SETTINGS \
++	"bootm_size=0x10000000 \0" \
++	"prodsdbootargs=setenv bootargs rw rootwait earlycon root=/dev/mmcblk1p1 \0" \
++	"prodemmcbootargs=setenv bootargs rw rootwait earlycon root=/dev/mmcblk0p1 \0" \
++	"bootimage=booti 0x48080000 - 0x48000000 \0" \
++	"emmcload=ext4load mmc 0:1 0x48080000 boot/Image;ext4load mmc 0:1 0x48000000 boot/r9a07g044l-smarc-rzg2l.dtb;run prodemmcbootargs \0" \
++	"sd1load=ext4load mmc 1:1 0x48080000 boot/Image;ext4load mmc 1:1 0x48000000 boot/r9a07g044l-smarc-rzg2l.dtb;run prodsdbootargs \0" \
++	"bootcmd_check=if mmc dev 1; then run sd1load; else run emmcload; fi \0"
++
++#define CONFIG_BOOTCOMMAND	"env default -a;run bootcmd_check;run bootimage"
++
++/* For board */
++/* Ethernet RAVB */
++#define CONFIG_BITBANGMII_MULTI
++
++#endif /* __SMARC_RZG2L_GNK_H */

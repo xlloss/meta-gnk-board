@@ -1,7 +1,7 @@
 From 8a221354018b75e0f97c0050710cbbf566ae01e8 Mon Sep 17 00:00:00 2001
 From: "Slash.Huang" <slash.huang@regulus.com>
 Date: Mon, 26 Sep 2022 13:47:50 +0800
-Subject: [PATCH 07/18] [gnk-v2l-g2l] light-sensor: isl76683: fixed rcu issue
+Subject: [PATCH 07/25] [gnk-v2l-g2l] light-sensor: isl76683: fixed rcu issue
  with sdhci
 
 ---

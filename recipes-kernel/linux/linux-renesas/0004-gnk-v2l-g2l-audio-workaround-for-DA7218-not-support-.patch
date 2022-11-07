@@ -1,7 +1,7 @@
 From 9d9b8f5bb6db2311fa586c1f9b03b9561f72d2f4 Mon Sep 17 00:00:00 2001
 From: "Slash.Huang" <slash.huang@regulus.com>
 Date: Fri, 23 Sep 2022 16:26:30 +0800
-Subject: [PATCH 04/18] [gnk-v2l-g2l] audio: workaround for DA7218 not support
+Subject: [PATCH 04/25] [gnk-v2l-g2l] audio: workaround for DA7218 not support
  clk = 0Hz in shutdown
 
 ---

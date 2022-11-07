@@ -1,7 +1,7 @@
 From 3a7a853de633e5fc3c89e01f7e241a9801337159 Mon Sep 17 00:00:00 2001
 From: "Slash.Huang" <slash.huang@regulus.com>
 Date: Sun, 25 Sep 2022 22:16:26 +0800
-Subject: [PATCH 05/18] [gnk-v2l-g2l] scif enable scif1
+Subject: [PATCH 05/25] [gnk-v2l-g2l] scif enable scif1
 
 ---
  arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts | 2 --

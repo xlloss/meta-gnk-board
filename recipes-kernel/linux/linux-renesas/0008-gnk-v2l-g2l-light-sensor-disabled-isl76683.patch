@@ -1,7 +1,7 @@
 From 9431e6134527aa65b8cb843f8fb0618c1fb4679f Mon Sep 17 00:00:00 2001
 From: slash <slash@gmail.com>
 Date: Fri, 4 Nov 2022 11:07:11 +0800
-Subject: [PATCH 08/18] [gnk-v2l-g2l] light-sensor: disabled isl76683
+Subject: [PATCH 08/25] [gnk-v2l-g2l] light-sensor: disabled isl76683
 
 ---
  arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi | 2 +-

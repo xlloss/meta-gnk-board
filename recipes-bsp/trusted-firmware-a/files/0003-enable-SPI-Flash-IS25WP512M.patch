@@ -3,7 +3,7 @@ From: slash <slash@gmail.com>
 Date: Tue, 25 Oct 2022 16:07:57 +0800
 Subject: [PATCH 3/4] enable SPI Flash IS25WP512M
 
-%% original patch: 0003-GREENPAK_RZG2L-enable-SPI-Flash-IS25WP512M.patch
+%% original patch: 0003-GNK_RZG2L-enable-SPI-Flash-IS25WP512M.patch
 ---
  plat/renesas/rz/common/rz_common.mk | 1 +
  1 file changed, 1 insertion(+)

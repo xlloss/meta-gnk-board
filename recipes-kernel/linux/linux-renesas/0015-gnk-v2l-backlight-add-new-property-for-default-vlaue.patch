@@ -1,7 +1,7 @@
 From 8726d60e3651ebb8ee434868844d8f1591623432 Mon Sep 17 00:00:00 2001
 From: slash <slash@gmail.com>
 Date: Fri, 4 Nov 2022 22:41:15 +0800
-Subject: [PATCH 15/18] [gnk-v2l] backlight: add new property for default vlaue
+Subject: [PATCH 15/25] [gnk-v2l] backlight: add new property for default vlaue
 
 ---
  .../boot/dts/renesas/rz-gnk-smarc-common.dtsi    |  1 +

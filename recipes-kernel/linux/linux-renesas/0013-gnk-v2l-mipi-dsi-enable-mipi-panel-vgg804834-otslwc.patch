@@ -1,7 +1,7 @@
 From e3bdc3f344120639d70d084b0bde8f481bb20fa5 Mon Sep 17 00:00:00 2001
 From: slash <slash@gmail.com>
 Date: Fri, 4 Nov 2022 15:51:37 +0800
-Subject: [PATCH 13/18] [gnk-v2l] mipi-dsi: enable mipi panel vgg804834-otslwc
+Subject: [PATCH 13/25] [gnk-v2l] mipi-dsi: enable mipi panel vgg804834-otslwc
 
 ---
  arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts | 4 ++++

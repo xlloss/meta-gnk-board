@@ -1,0 +1,28 @@
+From 92e2b31e05bc7b96370db4ef0d49c642251b37f6 Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Sat, 12 Nov 2022 10:56:17 +0800
+Subject: [PATCH 25/25] [gnk-v2l] backlight: enable pwm backlight
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts b/arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts
+index c3758ef24..c243761f0 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts
+@@ -97,3 +97,11 @@ &i2c0 {
+ &ov5645 {
+ 	status = "okay";
+ };
++
++&panel {
++	status = "okay";
++};
++
++&pwm_backlight {
++	status = "okay";
++};
+-- 
+2.25.1
+

@@ -3,7 +3,7 @@ From: slash <slash@gmail.com>
 Date: Tue, 25 Oct 2022 16:07:31 +0800
 Subject: [PATCH 2/4] add SPI Flash IS25WP512M
 
-%% original patch: 0002-GREENPAK_RZG2L-add-SPI-Flash-IS25WP512M.patch
+%% original patch: 0002-GNK_RZG2L-add-SPI-Flash-IS25WP512M.patch
 ---
  .../spi_multi/IS25WP512M/spi_multi_device.c   |  64 ++++++++++
  .../IS25WP512M/spi_multi_reg_values.h         | 119 ++++++++++++++++++

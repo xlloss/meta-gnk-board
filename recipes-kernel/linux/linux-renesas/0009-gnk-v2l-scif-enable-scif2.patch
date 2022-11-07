@@ -1,7 +1,7 @@
 From 03e632aaed7662c7258cbaa7647a74e58e30cedc Mon Sep 17 00:00:00 2001
 From: slash <slash@gmail.com>
 Date: Fri, 4 Nov 2022 11:13:51 +0800
-Subject: [PATCH 09/18] [gnk-v2l] scif: enable scif2
+Subject: [PATCH 09/25] [gnk-v2l] scif: enable scif2
 
 ---
  arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi | 8 ++++++++

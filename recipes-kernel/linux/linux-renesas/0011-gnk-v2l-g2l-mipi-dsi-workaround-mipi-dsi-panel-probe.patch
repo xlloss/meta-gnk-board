@@ -1,7 +1,7 @@
 From b54eaa6cb1e3d4e4777723d502e7e3513301df24 Mon Sep 17 00:00:00 2001
 From: slash <slash@gmail.com>
 Date: Fri, 28 Oct 2022 08:29:53 +0800
-Subject: [PATCH 11/18] [gnk-v2l-g2l] mipi-dsi: workaround mipi-dsi panel probe
+Subject: [PATCH 11/25] [gnk-v2l-g2l] mipi-dsi: workaround mipi-dsi panel probe
  fail
 
 ---

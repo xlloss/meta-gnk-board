@@ -1,7 +1,7 @@
 From 532172ccf0c442a86d3f166c92d1b5a0a6c11a1a Mon Sep 17 00:00:00 2001
 From: slash <slash@gmail.com>
 Date: Sat, 5 Nov 2022 17:16:58 +0800
-Subject: [PATCH 17/18] [gnk-vl2] scif: enable scif1/scif3
+Subject: [PATCH 17/25] [gnk-vl2] scif: enable scif1/scif3
 
 ---
  .../dts/renesas/r9a07g054l2-smarc-gnk.dts     | 28 +++++++++------

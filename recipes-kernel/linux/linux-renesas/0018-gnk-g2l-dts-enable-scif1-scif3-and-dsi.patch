@@ -1,7 +1,7 @@
 From 5a2f8c2b0eb03ae9996b7ab4879d37ac2943f0e7 Mon Sep 17 00:00:00 2001
 From: slash <slash@gmail.com>
 Date: Mon, 7 Nov 2022 13:30:08 +0800
-Subject: [PATCH 18/18] [gnk-g2l] dts: enable scif1/scif3 and dsi
+Subject: [PATCH 18/25] [gnk-g2l] dts: enable scif1/scif3 and dsi
 
 ---
  .../dts/renesas/r9a07g044l2-smarc-gnk.dts     | 45 +++++++++++++++++++

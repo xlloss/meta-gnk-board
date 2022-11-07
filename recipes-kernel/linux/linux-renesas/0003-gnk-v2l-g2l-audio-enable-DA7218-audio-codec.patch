@@ -1,7 +1,7 @@
 From 879a25dc3685a96992e770d6a772270830141aa7 Mon Sep 17 00:00:00 2001
 From: "Slash.Huang" <slash.huang@regulus.com>
 Date: Fri, 23 Sep 2022 16:24:30 +0800
-Subject: [PATCH 03/18] [gnk-v2l-g2l] audio: enable DA7218 audio codec
+Subject: [PATCH 03/25] [gnk-v2l-g2l] audio: enable DA7218 audio codec
 
 ---
  sound/soc/codecs/Kconfig | 2 +-

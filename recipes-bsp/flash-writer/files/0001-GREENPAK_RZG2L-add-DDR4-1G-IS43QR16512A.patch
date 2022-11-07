@@ -1,17 +1,18 @@
-From c04b45a11774dcdaff81ffff81915f352dce6f70 Mon Sep 17 00:00:00 2001
+From 0f03b132a82f33751d8a59fd04b411038bdc19d4 Mon Sep 17 00:00:00 2001
 From: slash <slash@gmail.com>
 Date: Tue, 25 Oct 2022 13:38:34 +0800
-Subject: [PATCH] [GREENPAK_RZG2L] add DDR4 1G IS43QR16512A
+Subject: [PATCH 1/2] add DDR4 1G IS43QR16512A
 
+%% original patch: 0001-GREENPAK_RZG2L-add-DDR4-1G-IS43QR16512A.patch
 ---
  ddr/common/ddr.c                          |  14 +-
- ddr/common/param_swizzle_T1bc-greenpak.c  |  73 ++++
- ddr/g2l/param_mc_C-011_D4-01-2-greenpak.c | 449 ++++++++++++++++++++++
+ ddr/common/param_swizzle_T1bc-gnk.c  |  73 ++++
+ ddr/g2l/param_mc_C-011_D4-01-2-gnk.c | 449 ++++++++++++++++++++++
  dgmodul4.c                                |  16 +
  include/dgmodul4.h                        |   2 +
  5 files changed, 551 insertions(+), 3 deletions(-)
- create mode 100755 ddr/common/param_swizzle_T1bc-greenpak.c
- create mode 100755 ddr/g2l/param_mc_C-011_D4-01-2-greenpak.c
+ create mode 100755 ddr/common/param_swizzle_T1bc-gnk.c
+ create mode 100755 ddr/g2l/param_mc_C-011_D4-01-2-gnk.c
 
 diff --git a/ddr/common/ddr.c b/ddr/common/ddr.c
 index a5390bb..187ee01 100644
@@ -22,8 +23,8 @@ index a5390bb..187ee01 100644
  #include "param_mc_C-011_D4-01-1.c"
  #elif (DDR_SIZE_1GB_1PCS == 1)
 -#include "param_mc_C-011_D4-01-2.c"
-+	#if (GREENPAK_RZG2L == 1)
-+		#include "param_mc_C-011_D4-01-2-greenpak.c"
++	#if (GNK_RZG2L == 1)
++		#include "param_mc_C-011_D4-01-2-gnk.c"
 +	#else
 +		#include "param_mc_C-011_D4-01-2.c"
 +	#endif
@@ -34,8 +35,8 @@ index a5390bb..187ee01 100644
  #include "param_swizzle_T1c.c"
  #elif (SWIZZLE_T1BC == 1)
 -#include "param_swizzle_T1bc.c"
-+	#if (GREENPAK_RZG2L == 1)
-+		#include "param_swizzle_T1bc-greenpak.c"
++	#if (GNK_RZG2L == 1)
++		#include "param_swizzle_T1bc-gnk.c"
 +	#else
 +		#include "param_swizzle_T1bc.c"
 +	#endif
@@ -51,11 +52,11 @@ index a5390bb..187ee01 100644
  			} else {
  				current_vref = vref_mid_level_code + vref_training_value - sweep_range;
  			}
-diff --git a/ddr/common/param_swizzle_T1bc-greenpak.c b/ddr/common/param_swizzle_T1bc-greenpak.c
+diff --git a/ddr/common/param_swizzle_T1bc-gnk.c b/ddr/common/param_swizzle_T1bc-gnk.c
 new file mode 100755
 index 0000000..b146234
 --- /dev/null
-+++ b/ddr/common/param_swizzle_T1bc-greenpak.c
++++ b/ddr/common/param_swizzle_T1bc-gnk.c
 @@ -0,0 +1,73 @@
 +/*
 + * Copyright (c) 2020-2022, Renesas Electronics Corporation. All rights reserved.
@@ -130,11 +131,11 @@ index 0000000..b146234
 +	{DDRPHY_R29,	0x00000007	},
 +	{DDRPHY_R11,	0x001E1D0C	}
 +};
-diff --git a/ddr/g2l/param_mc_C-011_D4-01-2-greenpak.c b/ddr/g2l/param_mc_C-011_D4-01-2-greenpak.c
+diff --git a/ddr/g2l/param_mc_C-011_D4-01-2-gnk.c b/ddr/g2l/param_mc_C-011_D4-01-2-gnk.c
 new file mode 100755
 index 0000000..a4f9b93
 --- /dev/null
-+++ b/ddr/g2l/param_mc_C-011_D4-01-2-greenpak.c
++++ b/ddr/g2l/param_mc_C-011_D4-01-2-gnk.c
 @@ -0,0 +1,449 @@
 +/*
 + * Copyright (c) 2020-2022, Renesas Electronics Corporation. All rights reserved.
@@ -629,3 +630,6 @@ index 2e20529..350cdc8 100644
  #define	DEVICE_ID_W25Q64JV		0x4017
  #define	DEVICE_ID_W25Q64JW		0x6017
  #define	DEVICE_ID_W25Q128JV		0x4018
+-- 
+2.25.1
+

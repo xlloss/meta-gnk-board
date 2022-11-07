@@ -1,7 +1,7 @@
 From 7871e1fa752d30ee9f4c64d6eae29d5a0579ea13 Mon Sep 17 00:00:00 2001
 From: "Slash.Huang" <slash.huang@regulus.com>
 Date: Mon, 26 Sep 2022 13:31:32 +0800
-Subject: [PATCH 06/18] [gnk-v2l-g2l] light-sensor: support isl76683
+Subject: [PATCH 06/25] [gnk-v2l-g2l] light-sensor: support isl76683
 
  [0/2] Support for isl76683 ambient light sensor
      https://lore.kernel.org/all/20210602134512.193186-1-chf.fritz@googlemail.com/

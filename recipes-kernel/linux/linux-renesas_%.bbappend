@@ -21,9 +21,17 @@ SRC_URI_append = " \
 	file://0016-gnk-v2l-dts-reserve-memeory-for-drp-ai.patch \
 	file://0017-gnk-vl2-scif-enable-scif1-scif3.patch \
 	file://0018-gnk-g2l-dts-enable-scif1-scif3-and-dsi.patch \
+	file://0019-gnk-g2l-v2l-dts-support-ov5640.patch \
+	file://0020-gnk-g2l-enable-ov5640.patch \
+	file://0021-gnk-v2l-enable-ov5640.patch \
+	file://0022-gnk-g2l-v2l-dsi-panel-use-drm_panel_of_backlight.patch \
+	file://0023-gnk-g2l-v2l-backlight-support-pwm-backlight-with-pwm.patch \
+	file://0024-gnk-g2l-backlight-enable-pwm-backlight.patch \
+	file://0025-gnk-v2l-backlight-enable-pwm-backlight.patch \
 "
 
-COMPATIBLE_MACHINE_rzv2l = "(greenpak-rzg2l|greenpak-rzv2l)"
+COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"
+COMPATIBLE_MACHINE_rzv2l = "(gnk-rzv2l)"
 
 PARALLEL_MAKE = "-j 8"
 

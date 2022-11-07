@@ -4,8 +4,8 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
-DDR_SOURCES +=  plat/renesas/rz/soc/${PLAT}/drivers/ddr/param_mc_C-011_D4-01-1-greenpak.c \
-				plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-greenpak.c
+DDR_SOURCES +=  plat/renesas/rz/soc/${PLAT}/drivers/ddr/param_mc_C-011_D4-01-1-gnk.c \
+				plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-gnk.c
 
 
 DDR_PLL4    := 1600

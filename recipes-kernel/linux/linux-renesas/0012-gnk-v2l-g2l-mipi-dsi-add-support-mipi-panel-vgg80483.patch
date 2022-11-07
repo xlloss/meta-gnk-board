@@ -1,7 +1,7 @@
 From 4c570e30baf07f64d4c5a570682840147b6e805e Mon Sep 17 00:00:00 2001
 From: slash <slash@gmail.com>
 Date: Fri, 4 Nov 2022 15:48:52 +0800
-Subject: [PATCH 12/18] [gnk-v2l-g2l] mipi-dsi: add support mipi panel
+Subject: [PATCH 12/25] [gnk-v2l-g2l] mipi-dsi: add support mipi panel
  vgg804834-otslwc
 
 ---

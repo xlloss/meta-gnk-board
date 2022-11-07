@@ -1,20 +1,20 @@
 From 9643008d004262a7e42531549ddc66d370d0d26c Mon Sep 17 00:00:00 2001
 From: slash <slash@gmail.com>
 Date: Thu, 3 Nov 2022 14:28:19 +0800
-Subject: [PATCH 4/4] [GREENPAK_V2L] add DDR4-1GB IS43QR16512A
+Subject: [PATCH 4/4] [GNK_V2L] add DDR4-1GB IS43QR16512A
 
 ---
- .../ddr/param_swizzle_T1vbc-greenpak.c        |  73 +++
- .../ddr/param_mc_C-011_D4-01-1-greenpak.c     | 520 ++++++++++++++++++
+ .../ddr/param_swizzle_T1vbc-gnk.c        |  73 +++
+ .../ddr/param_mc_C-011_D4-01-1-gnk.c     | 520 ++++++++++++++++++
  2 files changed, 593 insertions(+)
- create mode 100644 plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-greenpak.c
- create mode 100644 plat/renesas/rz/soc/v2l/drivers/ddr/param_mc_C-011_D4-01-1-greenpak.c
+ create mode 100644 plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-gnk.c
+ create mode 100644 plat/renesas/rz/soc/v2l/drivers/ddr/param_mc_C-011_D4-01-1-gnk.c
 
-diff --git a/plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-greenpak.c b/plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-greenpak.c
+diff --git a/plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-gnk.c b/plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-gnk.c
 new file mode 100644
 index 0000000..1c8a8ea
 --- /dev/null
-+++ b/plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-greenpak.c
++++ b/plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-gnk.c
 @@ -0,0 +1,73 @@
 +/*
 + * Copyright (c) 2020-2022, Renesas Electronics Corporation. All rights reserved.
@@ -89,11 +89,11 @@ index 0000000..1c8a8ea
 +	{DDRPHY_R29,	0x00000007	},
 +	{DDRPHY_R11,	0x001E1D0C	}
 +};
-diff --git a/plat/renesas/rz/soc/v2l/drivers/ddr/param_mc_C-011_D4-01-1-greenpak.c b/plat/renesas/rz/soc/v2l/drivers/ddr/param_mc_C-011_D4-01-1-greenpak.c
+diff --git a/plat/renesas/rz/soc/v2l/drivers/ddr/param_mc_C-011_D4-01-1-gnk.c b/plat/renesas/rz/soc/v2l/drivers/ddr/param_mc_C-011_D4-01-1-gnk.c
 new file mode 100644
 index 0000000..ddea69f
 --- /dev/null
-+++ b/plat/renesas/rz/soc/v2l/drivers/ddr/param_mc_C-011_D4-01-1-greenpak.c
++++ b/plat/renesas/rz/soc/v2l/drivers/ddr/param_mc_C-011_D4-01-1-gnk.c
 @@ -0,0 +1,520 @@
 +/*
 + * Copyright (c) 2020-2022, Renesas Electronics Corporation. All rights reserved.

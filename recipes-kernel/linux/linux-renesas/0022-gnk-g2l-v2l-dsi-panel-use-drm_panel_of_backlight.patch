@@ -1,0 +1,82 @@
+From e30973d5edbec4e04a2a1f69b59daaecca4f385a Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Sat, 12 Nov 2022 03:01:54 +0800
+Subject: [PATCH 22/25] [gnk-g2l-v2l] dsi panel use drm_panel_of_backlight
+
+---
+ .../gpu/drm/panel/panel-vgg804834-otslwc.c    | 36 ++++---------------
+ 1 file changed, 6 insertions(+), 30 deletions(-)
+
+diff --git a/drivers/gpu/drm/panel/panel-vgg804834-otslwc.c b/drivers/gpu/drm/panel/panel-vgg804834-otslwc.c
+index 0774d6f8d..b6f98db70 100644
+--- a/drivers/gpu/drm/panel/panel-vgg804834-otslwc.c
++++ b/drivers/gpu/drm/panel/panel-vgg804834-otslwc.c
+@@ -210,8 +210,7 @@ static int otslw_panel_probe(struct mipi_dsi_device *dsi)
+ 	struct device *dev = &dsi->dev;
+ 	struct device_node *np = dev->of_node;
+ 	struct otslw_panel *panel;
+-	struct backlight_properties bl_props;
+-	u32 video_mode, def_enable;
++	u32 video_mode;
+ 	int ret;
+ 
+ 	panel = devm_kzalloc(&dsi->dev, sizeof(*panel), GFP_KERNEL);
+@@ -250,28 +249,10 @@ static int otslw_panel_probe(struct mipi_dsi_device *dsi)
+ 		return ret;
+ 	}
+ 
+-	panel->reset = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
++	panel->reset = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(panel->reset))
+ 		return PTR_ERR(panel->reset);
+ 
+-	panel->bl_pwr = devm_gpiod_get_optional(dev, "blpwr", GPIOD_OUT_HIGH);
+-	if (IS_ERR(panel->bl_pwr))
+-		return PTR_ERR(panel->bl_pwr);
+-
+-	memset(&bl_props, 0, sizeof(bl_props));
+-	bl_props.type = BACKLIGHT_RAW;
+-	bl_props.brightness = 1;
+-	bl_props.max_brightness = 1;
+-	bl_props.power = FB_BLANK_NORMAL;
+-	panel->backlight = devm_backlight_device_register(dev, dev_name(dev),
+-							  dev, dsi, &otslw_bl_ops,
+-							  &bl_props);
+-	if (IS_ERR(panel->backlight)) {
+-		ret = PTR_ERR(panel->backlight);
+-		dev_err(dev, "Failed to register backlight (%d)\n", ret);
+-		return ret;
+-	}
+-
+ 	ret = otslw_init_regulators(panel);
+ 	if (ret)
+ 		return ret;
+@@ -279,21 +260,16 @@ static int otslw_panel_probe(struct mipi_dsi_device *dsi)
+ 	drm_panel_init(&panel->panel, dev, &otslw_panel_funcs,
+ 		       DRM_MODE_CONNECTOR_DSI);
+ 
++	ret = drm_panel_of_backlight(&panel->panel);
++	if (ret)
++		return ret;
++
+ 	dev_set_drvdata(dev, panel);
+ 	drm_panel_add(&panel->panel);
+ 	ret = mipi_dsi_attach(dsi);
+ 	if (ret)
+ 		drm_panel_remove(&panel->panel);
+ 
+-	ret = of_property_read_u32(np, "default-brightness", &def_enable);
+-	if ((ret != 0))
+-		dev_info(dev, "brightness default enable\n");
+-
+-	def_enable = def_enable ? 1 : 0;
+-	backlight_device_set_brightness(panel->backlight, def_enable);
+-	gpiod_set_value_cansleep(panel->reset, 1);
+-	backlight_enable(panel->backlight);
+-
+ 	return ret;
+ }
+ 
+-- 
+2.25.1
+

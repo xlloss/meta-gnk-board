@@ -1,20 +1,53 @@
-From 9643008d004262a7e42531549ddc66d370d0d26c Mon Sep 17 00:00:00 2001
+From a87439d3c158a0c51791a970c3f9cb63567fff79 Mon Sep 17 00:00:00 2001
 From: slash <slash@gmail.com>
-Date: Thu, 3 Nov 2022 14:28:19 +0800
-Subject: [PATCH 4/4] [GREENPAK_V2L] add DDR4-1GB IS43QR16512A
+Date: Wed, 2 Nov 2022 21:37:52 +0800
+Subject: [PATCH 2/2] add DDR4 1G IS43QR16512A
 
+%% original patch: 0001-V2L-DDR-add-DDR4-1G-IS43QR16512A.patch
 ---
- .../ddr/param_swizzle_T1vbc-greenpak.c        |  73 +++
- .../ddr/param_mc_C-011_D4-01-1-greenpak.c     | 520 ++++++++++++++++++
- 2 files changed, 593 insertions(+)
- create mode 100644 plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-greenpak.c
- create mode 100644 plat/renesas/rz/soc/v2l/drivers/ddr/param_mc_C-011_D4-01-1-greenpak.c
+ ddr/common/ddr.c                          |  10 +
+ ddr/common/param_swizzle_T1vbc-gnk.c |  73 +++
+ ddr/v2l/param_mc_C-011_D4-01-1-gnk.c | 520 ++++++++++++++++++++++
+ 3 files changed, 603 insertions(+)
+ create mode 100644 ddr/common/param_swizzle_T1vbc-gnk.c
+ create mode 100644 ddr/v2l/param_mc_C-011_D4-01-1-gnk.c
 
-diff --git a/plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-greenpak.c b/plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-greenpak.c
+diff --git a/ddr/common/ddr.c b/ddr/common/ddr.c
+index 187ee01..3276def 100644
+--- a/ddr/common/ddr.c
++++ b/ddr/common/ddr.c
+@@ -20,6 +20,8 @@
+ #elif (DDR_SIZE_1GB_1PCS == 1)
+ 	#if (GNK_RZG2L == 1)
+ 		#include "param_mc_C-011_D4-01-2-gnk.c"
++	#elif (GNK_RZV2L == 1)
++		#include "param_mc_C-011_D4-01-1-gnk.c"
+ 	#else
+ 		#include "param_mc_C-011_D4-01-2.c"
+ 	#endif
+@@ -31,9 +33,17 @@
+ #elif (SWIZZLE_T1BC == 1)
+ 	#if (GNK_RZG2L == 1)
+ 		#include "param_swizzle_T1bc-gnk.c"
++	#elif (GNK_RZV2L == 1)
++		#include "param_swizzle_T1vbc-gnk.c"
+ 	#else
+ 		#include "param_swizzle_T1bc.c"
+ 	#endif
++#elif (SWIZZLE_T1VBC == 1)
++	#if (GNK_RZV2L == 1)
++		#include "param_swizzle_T1vbc-gnk.c"
++	#else
++		#error "Unknown swizzle"
++	#endif
+ #elif (SWIZZLE_T2C == 1)
+ #include "param_swizzle_T2c.c"
+ #elif (SWIZZLE_T3BC == 1)
+diff --git a/ddr/common/param_swizzle_T1vbc-gnk.c b/ddr/common/param_swizzle_T1vbc-gnk.c
 new file mode 100644
 index 0000000..1c8a8ea
 --- /dev/null
-+++ b/plat/renesas/rz/common/drivers/ddr/param_swizzle_T1vbc-greenpak.c
++++ b/ddr/common/param_swizzle_T1vbc-gnk.c
 @@ -0,0 +1,73 @@
 +/*
 + * Copyright (c) 2020-2022, Renesas Electronics Corporation. All rights reserved.
@@ -89,11 +122,11 @@ index 0000000..1c8a8ea
 +	{DDRPHY_R29,	0x00000007	},
 +	{DDRPHY_R11,	0x001E1D0C	}
 +};
-diff --git a/plat/renesas/rz/soc/v2l/drivers/ddr/param_mc_C-011_D4-01-1-greenpak.c b/plat/renesas/rz/soc/v2l/drivers/ddr/param_mc_C-011_D4-01-1-greenpak.c
+diff --git a/ddr/v2l/param_mc_C-011_D4-01-1-gnk.c b/ddr/v2l/param_mc_C-011_D4-01-1-gnk.c
 new file mode 100644
 index 0000000..ddea69f
 --- /dev/null
-+++ b/plat/renesas/rz/soc/v2l/drivers/ddr/param_mc_C-011_D4-01-1-greenpak.c
++++ b/ddr/v2l/param_mc_C-011_D4-01-1-gnk.c
 @@ -0,0 +1,520 @@
 +/*
 + * Copyright (c) 2020-2022, Renesas Electronics Corporation. All rights reserved.

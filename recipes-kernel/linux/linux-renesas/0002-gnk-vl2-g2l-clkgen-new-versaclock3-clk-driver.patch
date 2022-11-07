@@ -1,7 +1,7 @@
 From e1342542d9dc0c2137f5f8dafe3266b929b52f09 Mon Sep 17 00:00:00 2001
 From: "Slash.Huang" <slash.huang@regulus.com>
 Date: Fri, 23 Sep 2022 16:23:58 +0800
-Subject: [PATCH 02/18] [gnk-vl2-g2l] clkgen: new versaclock3 clk driver
+Subject: [PATCH 02/25] [gnk-vl2-g2l] clkgen: new versaclock3 clk driver
 
 ---
  .../bindings/clock/renesas-versaclock3.txt    |   61 +

@@ -1,7 +1,7 @@
 From aa200973bf358e4118b48c96f49786a2068ddc02 Mon Sep 17 00:00:00 2001
 From: slash <slash@gmail.com>
 Date: Fri, 4 Nov 2022 23:01:54 +0800
-Subject: [PATCH 16/18] [gnk-v2l] dts: reserve memeory for drp-ai
+Subject: [PATCH 16/25] [gnk-v2l] dts: reserve memeory for drp-ai
 
 ---
  arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts | 6 +++---
