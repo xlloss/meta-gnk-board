@@ -1,0 +1,160 @@
+From 89926205b51329e54acc80b57b1637d03de2952a Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Sat, 5 Nov 2022 06:52:14 +0800
+Subject: [PATCH 1/2] support gnk board dts
+
+%% original patch: 0001-gnk-dts-support-gnk-board-dts.patch
+---
+ arch/arm/dts/Makefile               |   3 +-
+ arch/arm/dts/smarc-rzv2l-gnk.dts    | 111 ++++++++++++++++++++++++++++
+ board/renesas/rzv2l-dev/rzv2l-dev.c |   2 +-
+ 3 files changed, 114 insertions(+), 2 deletions(-)
+ create mode 100644 arch/arm/dts/smarc-rzv2l-gnk.dts
+
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index 7b59d9b4..428f91c5 100644
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -931,7 +931,8 @@ dtb-$(CONFIG_RCAR_GEN3) += \
+ 	rzg2ul-type1-dev.dtb \
+ 	rzg2ul-type1-ddr3l-dev.dtb \
+ 	rzg2ul-type2-dev.dtb \
+-	smarc-rzg2ul.dtb 
++	smarc-rzg2ul.dtb \
++	smarc-rzv2l-gnk.dtb
+ 
+ ifdef CONFIG_RCAR_GEN3
+ DTC_FLAGS += -R 4 -p 0x1000
+diff --git a/arch/arm/dts/smarc-rzv2l-gnk.dts b/arch/arm/dts/smarc-rzv2l-gnk.dts
+new file mode 100644
+index 00000000..c8704bbc
+--- /dev/null
++++ b/arch/arm/dts/smarc-rzv2l-gnk.dts
+@@ -0,0 +1,111 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Device Tree Source for the GNK board
++ *
++ * Copyright (C) 2016 Renesas Electronics
++ *
++ * slash.linux.c@gmail.com
++ */
++
++/dts-v1/;
++#include <dt-bindings/gpio/gpio.h>
++#include "r9a07g054l.dtsi"
++#include "r9a07g054l-u-boot.dtsi"
++#include <dt-bindings/pinctrl/rzv2l-pinctrl.h>
++
++/ {
++	model = "smarc-rzv2l-gnk";
++	compatible = "renesas,r9a07g054l", "renesas,rzv2l";
++
++	aliases {
++		serial0 = &scif0;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
++	memory@48000000 {
++		device_type = "memory";
++		/* first 128MB is reserved for secure area. */
++		reg = <0 0x48000000 0 0x38000000>;
++	};
++
++};
++
++&pinctrl {
++	eth0_pins: eth0 {
++		pinmux = <RZV2L_PINMUX(20, 0, 1)>,
++				<RZV2L_PINMUX(20, 1, 1)>,
++				<RZV2L_PINMUX(20, 2, 1)>,
++				<RZV2L_PINMUX(21, 0, 1)>,
++				<RZV2L_PINMUX(21, 1, 1)>,
++				<RZV2L_PINMUX(22, 0, 1)>,
++				<RZV2L_PINMUX(22, 1, 1)>,
++				<RZV2L_PINMUX(23, 0, 1)>,
++				<RZV2L_PINMUX(23, 1, 1)>,
++				<RZV2L_PINMUX(24, 0, 1)>,
++				<RZV2L_PINMUX(24, 1, 1)>,
++				<RZV2L_PINMUX(25, 0, 1)>,
++				<RZV2L_PINMUX(25, 1, 1)>,
++				<RZV2L_PINMUX(26, 0, 1)>,
++				<RZV2L_PINMUX(26, 1, 1)>,
++				<RZV2L_PINMUX(27, 0, 1)>,
++				<RZV2L_PINMUX(27, 1, 1)>,
++				<RZV2L_PINMUX(28, 0, 1)>,
++				<RZV2L_PINMUX(28, 1, 1)>;
++	};
++};
++
++&xinclk {
++        clock-frequency = <24000000>;
++};
++
++&scif0 {
++	status = "okay";
++	clock = <100000000>;
++};
++
++&sdhi0 {
++	/* pinctrl placeholder
++	 * If this channel is used for interfacing with a SD card, a power enable
++	 * pin (SD0_PWR_EN) must be defined.
++	 * The SD0_PWR_EN pin is associated with P4_1.
++	 * A HIGH signal on SD0_PWR_EN will enable supply voltage for SD card.
++	*/
++	bus-width = <8>;
++	status = "okay";
++};
++
++&sdhi1 {
++	/* pinctrl placeholder
++	 * A power enable pin (SD1_PWR_EN) must be defined to interface with a
++	 * SD card.
++	 * The SD1_PWR_EN pin is associated with P39_2.
++	 * A HIGH signal on SD1_PWR_EN will enable supply voltage for SD card.
++	*/
++	bus-width = <4>;
++	status = "okay";
++};
++
++&eth0 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&eth0_pins>;
++	phy-handle = <&phy0>;
++	phy-mode = "rgmii";
++	status = "okay";
++
++	phy0: ethernet-phy@7 {
++		reg = <7>;
++	};
++};
++
++&i2c1 {
++	pinctrl-names = "default";
++	status = "okay";
++
++	adv7535: hdmi@3d {
++		compatible = "adi,adv7535";
++		reg = <0x3d>;
++	};
++};
+diff --git a/board/renesas/rzv2l-dev/rzv2l-dev.c b/board/renesas/rzv2l-dev/rzv2l-dev.c
+index 492b5b73..21362d38 100644
+--- a/board/renesas/rzv2l-dev/rzv2l-dev.c
++++ b/board/renesas/rzv2l-dev/rzv2l-dev.c
+@@ -52,7 +52,7 @@ void s_init(void)
+ 	/* SD1 power control: P39_1 = 0; P39_2 = 1; */
+ 	*(volatile u32 *)(PFC_PMC37) &= 0xFFFFFFF9; /* Port func mode 0b00 */
+ 	*(volatile u32 *)(PFC_PM37) = (*(volatile u32 *)(PFC_PM37) & 0xFFFFFFC3) | 0x28; /* Port output mode 0b1010 */
+-#if CONFIG_TARGET_SMARC_RZV2L
++#if CONFIG_TARGET_SMARC_RZV2L || CONFIG_TARGET_SMARC_RZV2L_GNK
+ 	*(volatile u32 *)(PFC_P37) = (*(volatile u32 *)(PFC_P37) & 0xFFFFFFF9) | 0x6;	/* Port 39[2:1] output value 0b11*/
+ #else
+ 
+-- 
+2.25.1
+

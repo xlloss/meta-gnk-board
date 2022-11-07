@@ -1,0 +1,73 @@
+From 8726d60e3651ebb8ee434868844d8f1591623432 Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Fri, 4 Nov 2022 22:41:15 +0800
+Subject: [PATCH 15/18] [gnk-v2l] backlight: add new property for default vlaue
+
+---
+ .../boot/dts/renesas/rz-gnk-smarc-common.dtsi    |  1 +
+ drivers/gpu/drm/panel/panel-vgg804834-otslwc.c   | 16 +++++++++++-----
+ 2 files changed, 12 insertions(+), 5 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index 029eee45a..75a2dd372 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -415,6 +415,7 @@ panel: mipi_panel {
+ 		v5p0-supply = <&reg_vcc_lcd>;
+ 		reset-gpios = <&pinctrl RZG2L_GPIO(46, 0) GPIO_ACTIVE_LOW>;
+ 		blpwr-gpios = <&pinctrl RZG2L_GPIO(48, 2) GPIO_ACTIVE_HIGH>;
++		default-brightness = <1>;
+ 		dsi-lanes = <2>;
+ 
+ 		#address-cells = <1>;
+diff --git a/drivers/gpu/drm/panel/panel-vgg804834-otslwc.c b/drivers/gpu/drm/panel/panel-vgg804834-otslwc.c
+index d9715764b..0774d6f8d 100644
+--- a/drivers/gpu/drm/panel/panel-vgg804834-otslwc.c
++++ b/drivers/gpu/drm/panel/panel-vgg804834-otslwc.c
+@@ -155,7 +155,7 @@ static int otslw_bl_get_brightness(struct backlight_device *bl)
+ 	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
+ 
+ 	bl->props.brightness =
+-		gpiod_get_value_cansleep(otslw->bl_pwr) == 1 ? 255 : 0;
++		gpiod_get_value_cansleep(otslw->bl_pwr) == 1 ? 1 : 0;
+ 
+ 	return bl->props.brightness & 0xff;
+ }
+@@ -211,7 +211,7 @@ static int otslw_panel_probe(struct mipi_dsi_device *dsi)
+ 	struct device_node *np = dev->of_node;
+ 	struct otslw_panel *panel;
+ 	struct backlight_properties bl_props;
+-	u32 video_mode;
++	u32 video_mode, def_enable;
+ 	int ret;
+ 
+ 	panel = devm_kzalloc(&dsi->dev, sizeof(*panel), GFP_KERNEL);
+@@ -260,9 +260,9 @@ static int otslw_panel_probe(struct mipi_dsi_device *dsi)
+ 
+ 	memset(&bl_props, 0, sizeof(bl_props));
+ 	bl_props.type = BACKLIGHT_RAW;
+-	bl_props.brightness = 0;
+-	bl_props.max_brightness = 255;
+-
++	bl_props.brightness = 1;
++	bl_props.max_brightness = 1;
++	bl_props.power = FB_BLANK_NORMAL;
+ 	panel->backlight = devm_backlight_device_register(dev, dev_name(dev),
+ 							  dev, dsi, &otslw_bl_ops,
+ 							  &bl_props);
+@@ -285,6 +285,12 @@ static int otslw_panel_probe(struct mipi_dsi_device *dsi)
+ 	if (ret)
+ 		drm_panel_remove(&panel->panel);
+ 
++	ret = of_property_read_u32(np, "default-brightness", &def_enable);
++	if ((ret != 0))
++		dev_info(dev, "brightness default enable\n");
++
++	def_enable = def_enable ? 1 : 0;
++	backlight_device_set_brightness(panel->backlight, def_enable);
+ 	gpiod_set_value_cansleep(panel->reset, 1);
+ 	backlight_enable(panel->backlight);
+ 
+-- 
+2.25.1
+

@@ -1,0 +1,225 @@
+From 495c7dc993d7833ebb14c85f97d6dd14572481ec Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Sat, 5 Nov 2022 07:14:12 +0800
+Subject: [PATCH 2/2] support gnk board config
+
+%% original patch: 0002-gnk-config-support-gnk-board-config.patch
+---
+ arch/arm/mach-rmobile/Kconfig.64  |  5 ++
+ board/renesas/rzv2l-dev/Kconfig   | 15 ++++++
+ configs/smarc-rzv2l-gnk_defconfig | 78 +++++++++++++++++++++++++++++++
+ include/configs/smarc-rzv2l-gnk.h | 78 +++++++++++++++++++++++++++++++
+ 4 files changed, 176 insertions(+)
+ create mode 100644 configs/smarc-rzv2l-gnk_defconfig
+ create mode 100644 include/configs/smarc-rzv2l-gnk.h
+
+diff --git a/arch/arm/mach-rmobile/Kconfig.64 b/arch/arm/mach-rmobile/Kconfig.64
+index 6e741230..91910844 100644
+--- a/arch/arm/mach-rmobile/Kconfig.64
++++ b/arch/arm/mach-rmobile/Kconfig.64
+@@ -192,6 +192,11 @@ config TARGET_SMARC_RZV2L
+ 	help
+           Support for Renesas RZ/V2L Dev Platform
+ 
++config TARGET_SMARC_RZV2L_GNK
++	bool "RZ/V2L GNK board"
++	help
++          Support for Renesas RZ/V2L Dev Platform
++
+ config TARGET_RZG2LC_DEV
+ 	bool "RZ/G2LC Dev board"
+ 	help
+diff --git a/board/renesas/rzv2l-dev/Kconfig b/board/renesas/rzv2l-dev/Kconfig
+index 07579158..cc610836 100644
+--- a/board/renesas/rzv2l-dev/Kconfig
++++ b/board/renesas/rzv2l-dev/Kconfig
+@@ -30,3 +30,18 @@ config SYS_CONFIG_NAME
+ 
+ endif
+ 
++if TARGET_SMARC_RZV2L_GNK
++
++config SYS_SOC
++	default "rmobile"
++
++config SYS_BOARD
++	default "rzv2l-dev"
++
++config SYS_VENDOR
++	default "renesas"
++
++config SYS_CONFIG_NAME
++	default "smarc-rzv2l-gnk"
++
++endif
+diff --git a/configs/smarc-rzv2l-gnk_defconfig b/configs/smarc-rzv2l-gnk_defconfig
+new file mode 100644
+index 00000000..609bfa93
+--- /dev/null
++++ b/configs/smarc-rzv2l-gnk_defconfig
+@@ -0,0 +1,78 @@
++CONFIG_ARM=y
++CONFIG_ARCH_CPU_INIT=y
++CONFIG_ARCH_RMOBILE=y
++CONFIG_SYS_TEXT_BASE=0x50000000
++CONFIG_ENV_SIZE=0x20000
++CONFIG_ENV_OFFSET=0xFFFE0000
++CONFIG_DM_GPIO=y
++CONFIG_RCAR_GEN3=y
++CONFIG_R9A07G054L=y
++CONFIG_TARGET_SMARC_RZV2L_GNK=y
++CONFIG_DEFAULT_DEVICE_TREE="smarc-rzv2l-gnk"
++CONFIG_SMBIOS_PRODUCT_NAME=""
++CONFIG_SPL=n
++CONFIG_FIT=y
++CONFIG_USE_BOOTARGS=y
++CONFIG_BOOTARGS="rw rootwait earlycon root=/dev/mmcblk0p1"
++CONFIG_SUPPORT_RAW_INITRD=y
++CONFIG_DEFAULT_FDT_FILE="smarc-rzv2l-gnk.dtb"
++CONFIG_VERSION_VARIABLE=y
++CONFIG_HUSH_PARSER=y
++CONFIG_CMD_BOOTZ=y
++CONFIG_CMD_GPIO=y
++CONFIG_CMD_I2C=y
++CONFIG_CMD_MMC=y
++CONFIG_CMD_PCI=y
++CONFIG_CMD_USB=y
++CONFIG_CMD_DHCP=y
++CONFIG_CMD_MII=y
++CONFIG_CMD_PING=y
++CONFIG_CMD_EXT2=y
++CONFIG_CMD_EXT4=y
++CONFIG_CMD_EXT4_WRITE=y
++CONFIG_CMD_FAT=y
++CONFIG_CMD_FS_GENERIC=y
++CONFIG_OF_CONTROL=y
++CONFIG_OF_LIST="smarc-rzv2l-gnk"
++CONFIG_MULTI_DTB_FIT_LZO=y
++CONFIG_MULTI_DTB_FIT_USER_DEFINED_AREA=y
++CONFIG_ENV_OVERWRITE=y
++CONFIG_SYS_RELOC_GD_ENV_ADDR=y
++CONFIG_REGMAP=y
++CONFIG_SYSCON=y
++CONFIG_CLK=y
++CONFIG_CLK_RENESAS=y
++CONFIG_CLK_R9A07G054L=y
++CONFIG_RCAR_GPIO=y
++CONFIG_PINCTRL_PFC_RZG2L=y
++CONFIG_RZG2L_GPIO=y
++CONFIG_DM_I2C=y
++CONFIG_SYS_I2C_RCAR_IIC=y
++CONFIG_SH_SDHI=y
++CONFIG_BITBANGMII=y
++CONFIG_PHY_MICREL=y
++CONFIG_PHY_MICREL_KSZ90X1=y
++CONFIG_DM_ETH=y
++CONFIG_RENESAS_RAVB=y
++CONFIG_PCI=y
++CONFIG_DM_PCI=y
++CONFIG_PCI_RCAR_GEN3=y
++CONFIG_DM_REGULATOR=y
++CONFIG_DM_REGULATOR_FIXED=y
++CONFIG_DM_REGULATOR_GPIO=y
++CONFIG_SCIF_CONSOLE=y
++CONFIG_TEE=y
++CONFIG_OPTEE=y
++CONFIG_USB=y
++CONFIG_DM_USB=y
++CONFIG_USB_XHCI_HCD=y
++CONFIG_USB_EHCI_HCD=y
++CONFIG_USB_EHCI_GENERIC=y
++CONFIG_USB_STORAGE=y
++CONFIG_OF_LIBFDT_OVERLAY=y
++CONFIG_SMBIOS_MANUFACTURER=""
++CONFIG_ENV_IS_IN_MMC=y
++CONFIG_SYS_RELOC_GD_ENV_ADDR=y
++CONFIG_SYS_MMC_ENV_DEV=0
++CONFIG_SYS_MMC_ENV_PART=2
++CONFIG_SYS_I2C_RZG2L_RIIC=y
+diff --git a/include/configs/smarc-rzv2l-gnk.h b/include/configs/smarc-rzv2l-gnk.h
+new file mode 100644
+index 00000000..8ae91c6d
+--- /dev/null
++++ b/include/configs/smarc-rzv2l-gnk.h
+@@ -0,0 +1,78 @@
++/* SPDX-License-Identifier: GPL-2.0+ */
++/*
++ * Copyright (C) 2021 Renesas Electronics Corporation
++ */
++
++#ifndef __SMARC_RZV2L_GNK_H
++#define __SMARC_RZV2L_GNK_H
++
++#include <asm/arch/rmobile.h>
++
++#define CONFIG_REMAKE_ELF
++
++#ifdef CONFIG_SPL
++#define CONFIG_SPL_TARGET	"spl/u-boot-spl.scif"
++#endif
++
++/* boot option */
++
++#define CONFIG_CMDLINE_TAG
++#define CONFIG_SETUP_MEMORY_TAGS
++#define CONFIG_INITRD_TAG
++
++/* Generic Interrupt Controller Definitions */
++/* RZ/V2L use GIC-v3 */
++#define CONFIG_GICV3
++#define GICD_BASE	0x11900000
++#define GICR_BASE	0x11960000
++
++/* console */
++#define CONFIG_SYS_CBSIZE		2048
++#define CONFIG_SYS_BARGSIZE		CONFIG_SYS_CBSIZE
++#define CONFIG_SYS_MAXARGS		64
++#define CONFIG_SYS_BAUDRATE_TABLE	{ 115200, 38400 }
++
++/* PHY needs a longer autoneg timeout */
++#define PHY_ANEG_TIMEOUT		20000
++
++/* MEMORY */
++#define CONFIG_SYS_INIT_SP_ADDR		CONFIG_SYS_TEXT_BASE
++
++/* SDHI clock freq */
++#define CONFIG_SH_SDHI_FREQ		133000000
++
++#define DRAM_RSV_SIZE			0x08000000
++#define CONFIG_SYS_SDRAM_BASE		(0x40000000 + DRAM_RSV_SIZE)
++#define CONFIG_SYS_SDRAM_SIZE		(0x40000000u - DRAM_RSV_SIZE) //total 1GB
++#define CONFIG_SYS_LOAD_ADDR		0x58000000
++#define CONFIG_LOADADDR			CONFIG_SYS_LOAD_ADDR // Default load address for tfpt,bootp...
++#define CONFIG_VERY_BIG_RAM
++#define CONFIG_MAX_MEM_MAPPED		(0x40000000u - DRAM_RSV_SIZE)
++
++#define CONFIG_SYS_MONITOR_BASE		0x00000000
++#define CONFIG_SYS_MONITOR_LEN		(1 * 1024 * 1024)
++#define CONFIG_SYS_MALLOC_LEN		(64 * 1024 * 1024)
++#define CONFIG_SYS_BOOTM_LEN		(64 << 20)
++
++/* The HF/QSPI layout permits up to 1 MiB large bootloader blob */
++#define CONFIG_BOARD_SIZE_LIMIT		1048576
++
++/* ENV setting */
++
++#define CONFIG_EXTRA_ENV_SETTINGS \
++	"bootm_size=0x10000000 \0" \
++	"prodsdbootargs=setenv bootargs rw rootwait earlycon root=/dev/mmcblk1p1 \0" \
++	"prodemmcbootargs=setenv bootargs rw rootwait earlycon root=/dev/mmcblk0p1 \0" \
++	"bootimage=booti 0x48080000 - 0x48000000 \0" \
++	"emmcload=ext4load mmc 0:1 0x48080000 boot/Image;ext4load mmc 0:1 0x48000000 boot/r9a07g054l-smarc-rzv2l-gnk.dtb;run prodemmcbootargs \0" \
++	"sd1load=ext4load mmc 1:1 0x48080000 boot/Image;ext4load mmc 1:1 0x48000000 boot/r9a07g054l-smarc-rzv2l-gnk.dtb;run prodsdbootargs \0" \
++	"bootcmd_check=if mmc dev 1; then run sd1load; else run emmcload; fi \0"
++
++
++#define CONFIG_BOOTCOMMAND	"env default -a;run bootcmd_check;run bootimage"
++
++/* For board */
++/* Ethernet RAVB */
++#define CONFIG_BITBANGMII_MULTI
++
++#endif /* __SMARC_RZV2L_GNK_H */
+-- 
+2.25.1
+

@@ -1,0 +1,43 @@
+From 3a7a853de633e5fc3c89e01f7e241a9801337159 Mon Sep 17 00:00:00 2001
+From: "Slash.Huang" <slash.huang@regulus.com>
+Date: Sun, 25 Sep 2022 22:16:26 +0800
+Subject: [PATCH 05/18] [gnk-v2l-g2l] scif enable scif1
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts | 2 --
+ arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi  | 6 ++++++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts b/arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts
+index 3606e240f..714331bed 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts
+@@ -43,8 +43,6 @@ isp_work0: SIMPLE_ISP {
+ };
+ 
+ &pinctrl {
+-	/delete-node/ can0-stb;
+-	/delete-node/ can1-stb;
+ 	scif1_pins: scif1 {
+ 		pinmux = <RZG2L_PORT_PINMUX(40, 0, 1)>,	/* TxD */
+ 			 <RZG2L_PORT_PINMUX(40, 1, 1)>;	/* RxD */
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index eebcebb5e..108a0fe2f 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -257,6 +257,12 @@ &scif0 {
+ 	status = "okay";
+ };
+ 
++&scif1 {
++	pinctrl-0 = <&scif1_pins>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
+ &sdhi1 {
+ 	pinctrl-0 = <&sdhi1_pins>;
+ 	pinctrl-1 = <&sdhi1_pins_uhs>;
+-- 
+2.25.1
+
