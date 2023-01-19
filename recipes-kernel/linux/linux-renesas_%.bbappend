@@ -28,6 +28,7 @@ SRC_URI_append = " \
 	file://0023-gnk-g2l-v2l-backlight-support-pwm-backlight-with-pwm.patch \
 	file://0024-gnk-g2l-backlight-enable-pwm-backlight.patch \
 	file://0025-gnk-v2l-backlight-enable-pwm-backlight.patch \
+	file://0026-gnk-g2l-v2l-isl76683-disable-interrupt.patch \
 "
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"
