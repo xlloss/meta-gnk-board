@@ -1,0 +1,25 @@
+From 6f9cac68fd473e79b686a7429ca5c17ee573bcc0 Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Thu, 12 Jan 2023 09:14:30 +0800
+Subject: [PATCH 2/3] [gnk-g2l-v2l] enable isl76683 in dts
+
+---
+ arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index 20be54aa5a72..6792ca7c8e13 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -233,7 +233,7 @@ &i2c3 {
+ 	status = "okay";
+ 
+ 	isl76683@44 {
+-		status = "disabled";
++		status = "okay";
+ 		compatible = "isil,isl76683";
+ 		reg = <0x44>;
+ 		interrupt-parent = <&pinctrl>;
+-- 
+2.25.1
+
