@@ -3,6 +3,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI_append = " \
 	file://i2c.cfg \
 	file://audio.cfg \
+	file://ts_vgg804834_0tslwc.cfg \
 	file://0001-gnk-v2l-g2l-new-r9a07g054l2-smarc-gnk.dts-r9a07g044l.patch \
 	file://0002-gnk-vl2-g2l-clkgen-new-versaclock3-clk-driver.patch \
 	file://0003-gnk-v2l-g2l-audio-enable-DA7218-audio-codec.patch \
@@ -30,6 +31,8 @@ SRC_URI_append = " \
 	file://0025-gnk-v2l-backlight-enable-pwm-backlight.patch \
 	file://0026-gnk-g2l-v2l-isl76683-disable-interrupt.patch \
 	file://0027-gnk-g2l-v2l-enable-isl76683-in-dts.patch \
+	file://0028-gnk-g2l-v2l-add-VGG804834-0TSLWC-I2C-Touch-Screen-Dr.patch \
+	file://0029-gnk-g2l-v2l-add-VGG804834-0TSLWC-TS-dts-note.patch \
 "
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"
