@@ -46,3 +46,7 @@ CFLAGS += " \
         -Wno-implicit-fallthr \
         -Wno-implicit-function-declaration \
 "
+KERNEL_MODULE_AUTOLOAD_append += "\
+	vgg804834_ts_i2c \
+	isl76683 \
+	"
