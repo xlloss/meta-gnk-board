@@ -4,6 +4,7 @@ SRC_URI_append = " \
 	file://i2c.cfg \
 	file://audio.cfg \
 	file://ts_vgg804834_0tslwc.cfg \
+	file://isl76683.cfg \
 	file://0001-gnk-v2l-g2l-new-r9a07g054l2-smarc-gnk.dts-r9a07g044l.patch \
 	file://0002-gnk-vl2-g2l-clkgen-new-versaclock3-clk-driver.patch \
 	file://0003-gnk-v2l-g2l-audio-enable-DA7218-audio-codec.patch \
