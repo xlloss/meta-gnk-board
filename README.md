@@ -71,7 +71,7 @@ Step 7: Start Build Image
 
 ===================================
 
-	Boot BNK Board
+	Boot GNK Board
 
 ===================================
 
