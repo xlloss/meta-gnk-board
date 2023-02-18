@@ -34,6 +34,7 @@ SRC_URI_append = " \
 	file://0029-gnk-g2l-v2l-add-VGG804834-0TSLWC-TS-dts-note.patch \
 	file://0031-gnk_g2l_v2l-fixed-mipi-dsi-color-invert-issue.patch \
 	file://0032-gnk_g2l_v2l-fixed-mipi-dsi-vgg804834-otslwc-timing-v.patch \
+	file://0033-gnk_g2l_v2l-fixed-sd-mmc-cd-gpios-confilc.patch \
 "
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"

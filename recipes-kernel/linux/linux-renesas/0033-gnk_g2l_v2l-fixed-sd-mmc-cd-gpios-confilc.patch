@@ -1,0 +1,24 @@
+From a769f425e35186b0e1c31b6b76b183f631f255f4 Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Sat, 18 Feb 2023 15:04:31 +0800
+Subject: [PATCH 3/4] [gnk_g2l_v2l] fixed sd/mmc cd-gpios confilc
+
+---
+ arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index 6e0454c84..6f0bd78dc 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -360,7 +360,6 @@ &sdhi1 {
+ 
+ 	vmmc-supply = <&reg_3p3v>;
+ 	vqmmc-supply = <&vccq_sdhi1>;
+-	cd-gpios = <&pinctrl RZG2L_GPIO(19, 0) GPIO_ACTIVE_LOW>;
+ 	bus-width = <4>;
+ 	sd-uhs-sdr50;
+ 	sd-uhs-sdr104;
+-- 
+2.25.1
+
