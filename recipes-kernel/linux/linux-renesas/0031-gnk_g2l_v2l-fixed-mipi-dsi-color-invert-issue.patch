@@ -1,0 +1,26 @@
+From e65696b5317d622bf5ac9a94060b9ed4a435f1b7 Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Sat, 18 Feb 2023 14:57:40 +0800
+Subject: [PATCH 1/4] [gnk_g2l_v2l] fixed mipi-dsi color invert issue
+
+---
+ drivers/media/platform/vsp1/vsp1_pipe.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/media/platform/vsp1/vsp1_pipe.c b/drivers/media/platform/vsp1/vsp1_pipe.c
+index f72ac01c2..3118fc839 100644
+--- a/drivers/media/platform/vsp1/vsp1_pipe.c
++++ b/drivers/media/platform/vsp1/vsp1_pipe.c
+@@ -114,7 +114,8 @@ static const struct vsp1_format_info vsp1_video_formats[] = {
+ 	  VI6_FMT_ARGB_8888, VI6_RPF_DSWAP_P_LLS | VI6_RPF_DSWAP_P_LWS,
+ 	  1, { 32, 0, 0 }, false, false, 1, 1, true },
+ 	{ V4L2_PIX_FMT_XBGR32, MEDIA_BUS_FMT_ARGB8888_1X32,
+-	  VI6_FMT_ARGB_8888, VI6_RPF_DSWAP_P_LLS | VI6_RPF_DSWAP_P_LWS,
++	  VI6_FMT_RGBA_8888, VI6_RPF_DSWAP_P_LLS | VI6_RPF_DSWAP_P_LWS |
++	  VI6_RPF_DSWAP_P_WDS | VI6_RPF_DSWAP_P_BTS,
+ 	  1, { 32, 0, 0 }, false, false, 1, 1, false },
+ 	{ V4L2_PIX_FMT_BGRA32, MEDIA_BUS_FMT_ARGB8888_1X32,
+ 	  VI6_FMT_RGBA_8888, VI6_RPF_DSWAP_P_LLS | VI6_RPF_DSWAP_P_LWS,
+-- 
+2.25.1
+
