@@ -35,6 +35,7 @@ SRC_URI_append = " \
 	file://0031-gnk_g2l_v2l-fixed-mipi-dsi-color-invert-issue.patch \
 	file://0032-gnk_g2l_v2l-fixed-mipi-dsi-vgg804834-otslwc-timing-v.patch \
 	file://0033-gnk_g2l_v2l-fixed-sd-mmc-cd-gpios-confilc.patch \
+	file://0034-gnk_g2l_v2l-modify-gnk-smarcboard-name-in-dts.patch \
 "
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"
