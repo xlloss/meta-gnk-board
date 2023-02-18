@@ -6,7 +6,6 @@ SRC_URI_append = " \
 	file://ts_vgg804834_0tslwc.cfg \
 	file://isl76683.cfg \
 	file://0001-gnk-v2l-g2l-new-r9a07g054l2-smarc-gnk.dts-r9a07g044l.patch \
-	file://0002-gnk-vl2-g2l-clkgen-new-versaclock3-clk-driver.patch \
 	file://0003-gnk-v2l-g2l-audio-enable-DA7218-audio-codec.patch \
 	file://0004-gnk-v2l-g2l-audio-workaround-for-DA7218-not-support-.patch \
 	file://0005-gnk-v2l-g2l-scif-enable-scif1.patch \
@@ -15,7 +14,6 @@ SRC_URI_append = " \
 	file://0008-gnk-v2l-g2l-light-sensor-disabled-isl76683.patch \
 	file://0009-gnk-v2l-scif-enable-scif2.patch \
 	file://0010-gnk-v2l-canbus-delete-can-stb-node.patch \
-	file://0011-gnk-v2l-g2l-mipi-dsi-workaround-mipi-dsi-panel-probe.patch \
 	file://0012-gnk-v2l-g2l-mipi-dsi-add-support-mipi-panel-vgg80483.patch \
 	file://0013-gnk-v2l-mipi-dsi-enable-mipi-panel-vgg804834-otslwc.patch \
 	file://0014-gnk-v2l-spi-disabled-spi1.patch \
@@ -34,7 +32,6 @@ SRC_URI_append = " \
 	file://0027-gnk-g2l-v2l-enable-isl76683-in-dts.patch \
 	file://0028-gnk-g2l-v2l-add-VGG804834-0TSLWC-I2C-Touch-Screen-Dr.patch \
 	file://0029-gnk-g2l-v2l-add-VGG804834-0TSLWC-TS-dts-note.patch \
-	file://0030-gnk-g2l-v2l-vsp-fixed-mipi-dsi-color-invert.patch \
 "
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"
