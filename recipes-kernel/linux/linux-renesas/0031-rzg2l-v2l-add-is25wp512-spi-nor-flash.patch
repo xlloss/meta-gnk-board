@@ -1,0 +1,25 @@
+From d54823e0ec422e0caa497c28a46fe39e8c5f1a79 Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Fri, 10 Mar 2023 23:25:37 +0800
+Subject: [PATCH] [rzg2l-v2l] add is25wp512 spi-nor-flash
+
+---
+ drivers/mtd/spi-nor/issi.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/mtd/spi-nor/issi.c b/drivers/mtd/spi-nor/issi.c
+index ffcb60e54..48d618c13 100644
+--- a/drivers/mtd/spi-nor/issi.c
++++ b/drivers/mtd/spi-nor/issi.c
+@@ -60,6 +60,8 @@ static const struct flash_info issi_parts[] = {
+ 			    SPI_NOR_4B_OPCODES)
+ 		.fixups = &is25lp256_fixups },
+ 
++	{ "is25wp512",  INFO(0x9d701A, 0, 64 * 1024, 1024,
++			     SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
+ 	/* PMC */
+ 	{ "pm25lv512",   INFO(0,        0, 32 * 1024,    2, SECT_4K_PMC) },
+ 	{ "pm25lv010",   INFO(0,        0, 32 * 1024,    4, SECT_4K_PMC) },
+-- 
+2.25.1
+

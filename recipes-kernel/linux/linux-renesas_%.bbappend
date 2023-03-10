@@ -35,6 +35,7 @@ SRC_URI_append = " \
 	file://0028-gnk-g2l-v2l-add-VGG804834-0TSLWC-I2C-Touch-Screen-Dr.patch \
 	file://0029-gnk-g2l-v2l-add-VGG804834-0TSLWC-TS-dts-note.patch \
 	file://0030-gnk-g2l-v2l-vsp-fixed-mipi-dsi-color-invert.patch \
+	file://0031-rzg2l-v2l-add-is25wp512-spi-nor-flash.patch \
 "
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"
