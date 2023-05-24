@@ -1,6 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
-COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"
+COMPATIBLE_MACHINE_rzg2l = "gnk-rzg2l"
 
 # For RZ/G2L Series
 PLATFORM_gnk-rzg2l = "g2l"
