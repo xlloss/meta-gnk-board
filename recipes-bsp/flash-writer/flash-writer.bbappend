@@ -4,6 +4,8 @@ SRC_URI_append = " \
 	file://0001-rzg2l-rzv2l-add-gnk-smarc-board-ddr-sdram-1GB.patch \
 	file://0001-GREENPAK_RZG2L-add-DDR4-1G-IS43QR16512A.patch \
 	file://0001-V2L-DDR-add-DDR4-1G-IS43QR16512A.patch \
+	file://0001-rzg2l-rzv2l-fixed-IS25WP512M-read-write-issue-1.patch \
+	file://0002-rzg2l-rzv2l-fixed-IS25WP512M-read-write-issue-2.patch \
 "
 
 inherit deploy
