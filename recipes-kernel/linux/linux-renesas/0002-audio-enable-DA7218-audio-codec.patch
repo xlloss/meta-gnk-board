@@ -1,0 +1,25 @@
+From 76ea19796afa3b0f2082c21617324c3730ef1591 Mon Sep 17 00:00:00 2001
+From: "Slash.Huang" <slash.huang@regulus.com>
+Date: Fri, 23 Sep 2022 16:24:30 +0800
+Subject: [PATCH 02/25] audio: enable DA7218 audio codec
+
+---
+ sound/soc/codecs/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+index 99504d947ebf..e667139315ae 100644
+--- a/sound/soc/codecs/Kconfig
++++ b/sound/soc/codecs/Kconfig
+@@ -744,7 +744,7 @@ config SND_SOC_DA7213
+ 	depends on I2C
+ 
+ config SND_SOC_DA7218
+-	tristate
++	tristate "Dialog DA7218 CODEC"
+ 	depends on I2C
+ 
+ config SND_SOC_DA7219
+-- 
+2.25.1
+

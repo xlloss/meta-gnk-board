@@ -1,0 +1,71 @@
+From 78e805f84f4557ec15602c3fcfe69f02b569dd62 Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Fri, 10 Nov 2023 17:54:24 +0800
+Subject: [PATCH 16/25]  backlight: support pwm backlight with pwm-3-ch-a
+
+---
+ .../boot/dts/renesas/rz-gnk-smarc-common.dtsi | 35 +++++++++++++++++--
+ 1 file changed, 32 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index 594262b09621..d31d38f579a8 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -157,6 +157,22 @@ clk_ext_camera: clk_ext_camera {
+ 		clock-frequency = <24000000>;
+ 	};
+ 
++	reg_vcc_lcd: regulator-vcc-lcd {
++		compatible = "regulator-fixed";
++		regulator-name = "fixed-5.0V";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		regulator-boot-on;
++		regulator-always-on;
++	};
++
++	pwm_backlight: pwm_backlight{
++		compatible = "pwm-backlight";
++		status = "disabled";
++		pwms = <&gpt3 0 20000>;
++		brightness-levels = <0 50 80 110 140 170 200 220 230 240 255>;
++		default-brightness-level = <10>;
++	};
+ };
+ 
+ &audio_clk1{
+@@ -437,11 +453,10 @@ dsi0_out: endpoint {
+ 	panel: mipi_panel {
+ 		compatible = "evervision,vgg804834-otslwc";
+ 		reg = <0>;
+-		v5p0-supply = <&reg_vcc_lcd>;
+ 		reset-gpios = <&pinctrl RZG2L_GPIO(46, 0) GPIO_ACTIVE_LOW>;
+-		blpwr-gpios = <&pinctrl RZG2L_GPIO(48, 2) GPIO_ACTIVE_HIGH>;
+-		default-brightness = <1>;
+ 		dsi-lanes = <2>;
++		backlight = <&pwm_backlight>;
++		status = "disabled";
+ 
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+@@ -592,3 +607,17 @@ csi2_in: endpoint {
+ 		};
+ 	};
+ };
++
++&gpt3 {
++	pinctrl-0 = <&gpt3_pins>;
++	pinctrl-names = "default";
++	status = "okay";
++	channel = "channel_A";
++};
++
++&pinctrl {
++	gpt3_pins: gpt3 {
++		/* Channel A */
++		pinmux = <RZG2L_PORT_PINMUX(3, 0, 3)>;
++	};
++};
+-- 
+2.25.1
+

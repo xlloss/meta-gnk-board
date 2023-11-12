@@ -1,0 +1,31 @@
+From 4af1fb14bd9de158937ca58e42072aa73af60b15 Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Fri, 4 Nov 2022 11:13:51 +0800
+Subject: [PATCH 08/25] scif: enable scif2
+
+---
+ arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index 359023fa3115..b0d1472fa655 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -263,6 +263,14 @@ &scif1 {
+ 	status = "okay";
+ };
+ 
++&scif2 {
++	pinctrl-0 = <&scif2_pins>;
++	pinctrl-names = "default";
++
++	uart-has-rtscts;
++	status = "okay";
++};
++
+ &sdhi1 {
+ 	pinctrl-0 = <&sdhi1_pins>;
+ 	pinctrl-1 = <&sdhi1_pins_uhs>;
+-- 
+2.25.1
+

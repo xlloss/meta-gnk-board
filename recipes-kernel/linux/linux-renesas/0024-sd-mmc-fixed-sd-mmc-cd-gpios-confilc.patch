@@ -1,0 +1,24 @@
+From 25b3bbedbb026ac928909c36cb2dca3d3ebcf937 Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Sat, 18 Feb 2023 15:04:31 +0800
+Subject: [PATCH 24/25]  sd-mmc: fixed sd/mmc cd-gpios confilc
+
+---
+ arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index f742fc34c082..e8de85ccb17b 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -352,7 +352,6 @@ &sdhi1 {
+ 
+ 	vmmc-supply = <&reg_3p3v>;
+ 	vqmmc-supply = <&vccq_sdhi1>;
+-	cd-gpios = <&pinctrl RZG2L_GPIO(19, 0) GPIO_ACTIVE_LOW>;
+ 	bus-width = <4>;
+ 	sd-uhs-sdr50;
+ 	sd-uhs-sdr104;
+-- 
+2.25.1
+

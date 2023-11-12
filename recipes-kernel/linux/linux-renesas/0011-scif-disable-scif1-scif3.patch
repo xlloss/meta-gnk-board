@@ -1,0 +1,78 @@
+From 6a829ff896fbdb899c4a4ced422e7678d05d6a0a Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Fri, 10 Nov 2023 15:42:28 +0800
+Subject: [PATCH 11/25]  scif: disable scif1/scif3
+
+---
+ .../boot/dts/renesas/rz-gnk-smarc-common.dtsi | 34 +++----------------
+ 1 file changed, 5 insertions(+), 29 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index 85bb2bb6eb09..19f1332a682b 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -267,9 +267,7 @@ &scif0 {
+ };
+ 
+ &scif1 {
+-	pinctrl-0 = <&scif1_pins>;
+-	pinctrl-names = "default";
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &scif2 {
+@@ -280,6 +278,10 @@ &scif2 {
+ 	status = "okay";
+ };
+ 
++&scif3 {
++	status = "disabled";
++};
++
+ &sdhi1 {
+ 	pinctrl-0 = <&sdhi1_pins>;
+ 	pinctrl-1 = <&sdhi1_pins_uhs>;
+@@ -491,24 +493,6 @@ phy1: ethernet-phy@7 {
+ 	};
+ };
+ 
+-&pinctrl {
+-	/delete-node/ can0-stb;
+-	/delete-node/ can1-stb;
+-	scif1_pins: scif1 {
+-		pinmux = <RZG2L_PORT_PINMUX(40, 0, 1)>,	/* TxD */
+-			 <RZG2L_PORT_PINMUX(40, 1, 1)>;	/* RxD */
+-	};
+-
+-	pmod0-gpio {
+-		gpio-hog;
+-		pinmux = <RZG2L_GPIO(43, 0) GPIO_ACTIVE_HIGH>,
+-			<RZG2L_GPIO(43, 2) GPIO_ACTIVE_HIGH>,
+-			<RZG2L_GPIO(41, 0) GPIO_ACTIVE_HIGH>,
+-			<RZG2L_GPIO(43, 1) GPIO_ACTIVE_HIGH>;
+-		output-low;
+-	};
+-};
+-
+ /* PMOD 0 */
+ &spi1 {
+ 	status = "disabled";
+@@ -519,14 +503,6 @@ spidev0: spi@0 {
+ 	};
+ };
+ 
+-&gpt4 {
+-	status = "disabled";
+-};
+-
+-&dsi0 {
+-	status = "okay";
+-};
+-
+ &i2c3 {
+ 	pinctrl-0 = <&i2c3_pins>;
+ 	pinctrl-names = "default";
+-- 
+2.25.1
+

@@ -1,0 +1,101 @@
+From 735f7906706bf7c32f20708a3bc65eb2576a0016 Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Fri, 10 Nov 2023 16:50:00 +0800
+Subject: [PATCH 13/25] camera: support ov5640
+
+---
+ .../boot/dts/renesas/rz-gnk-smarc-common.dtsi | 74 +++++++++++++++++++
+ 1 file changed, 74 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index 19f1332a682b..594262b09621 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -126,6 +126,37 @@ vccq_sdhi1: regulator-vccq-sdhi1 {
+ 		gpios-states = <1>;
+ 		states = <3300000 1>, <1800000 0>;
+ 	};
++
++	ov5645_vdddo_1v8: 1p8v {
++		compatible = "regulator-fixed";
++		regulator-name = "camera_vdddo";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++		regulator-always-on;
++	};
++
++	ov5645_vdda_2v8: 2p8v {
++		compatible = "regulator-fixed";
++		regulator-name = "camera_vdda";
++		regulator-min-microvolt = <2800000>;
++		regulator-max-microvolt = <2800000>;
++		regulator-always-on;
++	};
++
++	ov5645_vddd_1v5: 1p5v {
++		compatible = "regulator-fixed";
++		regulator-name = "camera_vddd";
++		regulator-min-microvolt = <1500000>;
++		regulator-max-microvolt = <1500000>;
++		regulator-always-on;
++	};
++
++	clk_ext_camera: clk_ext_camera {
++		compatible = "fixed-clock";
++		#clock-cells = <0>;
++		clock-frequency = <24000000>;
++	};
++
+ };
+ 
+ &audio_clk1{
+@@ -518,3 +549,46 @@ isl76683@44 {
+ 		interrupts = <RZG2L_GPIO(2, 1) IRQ_TYPE_EDGE_FALLING>;
+ 	};
+ };
++
++&i2c0 {
++	pinctrl-0 = <&i2c0_pins>;
++	pinctrl-names = "default";
++
++	status = "disabled";
++
++	ov5645: camera@3c {
++		compatible = "ovti,ov5645";
++		status = "disabled";
++		reg = <0x3c>;
++		clock-names = "xclk";
++		clocks = <&clk_ext_camera>;
++		clock-frequency = <24000000>;
++		vdddo-supply = <&ov5645_vdddo_1v8>;
++		vdda-supply = <&ov5645_vdda_2v8>;
++		vddd-supply = <&ov5645_vddd_1v5>;
++		enable-gpios = <&pinctrl RZG2L_GPIO(2, 0) GPIO_ACTIVE_HIGH>;
++		reset-gpios = <&pinctrl RZG2L_GPIO(40, 2) GPIO_ACTIVE_LOW>;
++
++		port {
++			ov5645_to_csi: endpoint {
++				clock-lanes = <0>;
++				data-lanes = <1 2>;
++				remote-endpoint = <&csi2_in>;
++			};
++		};
++	};
++};
++
++&csi2 {
++	status = "disabled";
++
++	ports {
++		port {
++			csi2_in: endpoint {
++				clock-lanes = <0>;
++				data-lanes = <1 2>;
++				remote-endpoint = <&ov5645_to_csi>;
++			};
++		};
++	};
++};
+-- 
+2.25.1
+

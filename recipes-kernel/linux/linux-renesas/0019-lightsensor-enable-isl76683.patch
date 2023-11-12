@@ -1,0 +1,25 @@
+From 8dba110e89016206bfc340a924e74c228a41007c Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Fri, 10 Nov 2023 22:21:10 +0800
+Subject: [PATCH 19/25]  lightsensor: enable isl76683
+
+---
+ arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index d31d38f579a8..3ca73228bb5d 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -557,7 +557,7 @@ &i2c3 {
+ 	clock-frequency = <400000>;
+ 
+ 	isl76683@44 {
+-		status = "disabled";
++		status = "okay";
+ 		compatible = "isil,isl76683";
+ 		reg = <0x44>;
+ 		interrupt-parent = <&pinctrl>;
+-- 
+2.25.1
+
