@@ -1,0 +1,87 @@
+From ca8a118d97ea10f5e1dc972a9d855ed25c730657 Mon Sep 17 00:00:00 2001
+From: "Slash.Huang" <slash.linux.c@gmail.com>
+Date: Sun, 29 Dec 2024 08:34:11 +0800
+Subject: [PATCH] [CONF] add apollo board
+
+---
+ ddr/common/ddr.c |  8 ++++++--
+ dgmodul4.c       |  2 +-
+ makefile         | 16 +++++++++++++++-
+ 3 files changed, 22 insertions(+), 4 deletions(-)
+
+diff --git a/ddr/common/ddr.c b/ddr/common/ddr.c
+index e29b605..22452f0 100644
+--- a/ddr/common/ddr.c
++++ b/ddr/common/ddr.c
+@@ -18,7 +18,9 @@
+ #elif (DDR_SIZE_2GB_1PCS == 1)
+ #include "param_mc_C-011_D4-01-1.c"
+ #elif (DDR_SIZE_1GB_1PCS == 1)
+-	#if (GNK_RZG2L == 1)
++	#if (APOLLO_RZG2L == 1)
++		#include "param_mc_C-011_D4-01-2-gnk.c"
++	#elif (GNK_RZG2L == 1)
+ 		#include "param_mc_C-011_D4-01-2-gnk.c"
+ 	#elif (GNK_RZV2L == 1)
+ 		#include "param_mc_C-011_D4-01-1-gnk.c"
+@@ -31,7 +33,9 @@
+ #if (SWIZZLE_T1C == 1)
+ #include "param_swizzle_T1c.c"
+ #elif (SWIZZLE_T1BC == 1)
+-	#if (GNK_RZG2L == 1)
++	#if (APOLLO_RZG2L == 1)
++		#include "param_swizzle_T1bc-gnk.c"
++	#elif (GNK_RZG2L == 1)
+ 		#include "param_swizzle_T1bc-gnk.c"
+ 	#elif (GNK_RZV2L == 1)
+ 		#include "param_swizzle_T1vbc-gnk.c"
+diff --git a/dgmodul4.c b/dgmodul4.c
+index 3f8fca3..6261d51 100644
+--- a/dgmodul4.c
++++ b/dgmodul4.c
+@@ -705,7 +705,7 @@ void dgClearSpiflash0(void)
+ 		return;		//Error abortt
+ 	}
+ 
+-#if (GNK_RZG2L == 1) || (GNK_RZV2L == 1)
++#if (GNK_RZG2L == 1) || (GNK_RZV2L == 1) || (APOLLO_RZG2L)
+ 	EnableQuadModeQspiFlashIS25WP512M();
+ #endif
+ 
+diff --git a/makefile b/makefile
+index a1721a2..d4f914b 100644
+--- a/makefile
++++ b/makefile
+@@ -8,7 +8,17 @@ ifeq ("$(BOARD)", "")
+ BOARD = RZG2L_SMARC
+ endif
+ 
+-ifeq ("$(BOARD)", "GNK_RZG2L")
++ifeq ("$(BOARD)", "APOLLO_RZG2L")
++#--------------------------------------
++# RZ/G2L APOLLO_RZG2L board
++#--------------------------------------
++FILENAME_ADD = _APOLLO_RZG2L
++DEVICE   = RZG2L
++DDR_TYPE = DDR4
++DDR_SIZE = 1GB_1PCS
++SWIZZLE  = T1BC
++
++else ifeq ("$(BOARD)", "GNK_RZG2L")
+ #--------------------------------------
+ # RZ/G2L GNK_RZG2L Smarc board
+ #--------------------------------------
+@@ -200,6 +210,10 @@ SWIZZLE  = T3BCUD2
+ DEVICE_TYPE = 1
+ endif
+ 
++ifeq ("$(BOARD)", "APOLLO_RZG2L")
++	CFLAGS += -DAPOLLO_RZG2L=1
++endif
++
+ ifeq ("$(BOARD)", "GNK_RZG2L")
+ 	CFLAGS += -DGNK_RZG2L=1
+ endif
+-- 
+2.25.1
+

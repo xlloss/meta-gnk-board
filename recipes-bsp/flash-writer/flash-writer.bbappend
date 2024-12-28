@@ -6,6 +6,7 @@ SRC_URI_append = " \
 	file://0001-V2L-DDR-add-DDR4-1G-IS43QR16512A.patch \
 	file://0001-rzg2l-rzv2l-fixed-IS25WP512M-read-write-issue-1.patch \
 	file://0002-rzg2l-rzv2l-fixed-IS25WP512M-read-write-issue-2.patch \
+	file://0001-CONF-add-apollo-board.patch \
 "
 
 inherit deploy
@@ -20,6 +21,9 @@ do_compile() {
 	elif [ "${MACHINE}" = "gnk-rzv2l" ]; then
 		BOARD="GNK_RZV2L";
 		PMIC_BOARD="GNK_RZV2L";
+	elif [ "${MACHINE}" = "apollo-rzg2l" ]; then
+		BOARD="APOLLO_RZG2L";
+		PMIC_BOARD="APOLLO_RZG2L";
 	fi
 
 	cd ${S}

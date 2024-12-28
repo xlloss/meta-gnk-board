@@ -43,6 +43,7 @@ SRC_URI_append = " \
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"
 COMPATIBLE_MACHINE_rzv2l = "(gnk-rzv2l)"
+COMPATIBLE_MACHINE_rzg2l = "(apollo-rzg2l)"
 
 PARALLEL_MAKE = "-j 8"
 
