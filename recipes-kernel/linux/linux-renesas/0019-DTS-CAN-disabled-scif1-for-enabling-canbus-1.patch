@@ -1,0 +1,24 @@
+From 58b62f528cfcc8a9effde0b6d8b1020e0951e32a Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 19:01:19 +0800
+Subject: [PATCH 19/32] [DTS|CAN] disabled scif1 for enabling canbus-1
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+index 5c6f6e9e7b61..e793d109a4bc 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -22,3 +22,7 @@ channel0 {
+ 		status = "disabled";
+ 	};
+ };
++
++&scif1 {
++	status = "disabled";
++};
+-- 
+2.34.1
+

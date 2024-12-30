@@ -1,0 +1,47 @@
+From 64a09321851c0bb1cf3c03242a1677d8d059a11d Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 14:55:08 +0800
+Subject: [PATCH 04/32] [DTB] add apollo board dts
+
+---
+ arch/arm64/boot/dts/renesas/Makefile           |  1 +
+ .../boot/dts/renesas/r9a07g044l2-apollo.dts    | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+
+diff --git a/arch/arm64/boot/dts/renesas/Makefile b/arch/arm64/boot/dts/renesas/Makefile
+index 92f7db0542cf..3bf5071edcca 100644
+--- a/arch/arm64/boot/dts/renesas/Makefile
++++ b/arch/arm64/boot/dts/renesas/Makefile
+@@ -93,3 +93,4 @@ dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044l2-dev.dtb
+ dtb-$(CONFIG_ARCH_R9A07G054) += r9a07g054l2-smarc-gnk.dtb
+ dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044l2-smarc-gnk.dtb
+ dtb-$(CONFIG_ARCH_R9A07G054) += r9a07g054l2-dev.dtb
++dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044l2-apollo.dtb
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+new file mode 100644
+index 000000000000..d3a55bd8c888
+--- /dev/null
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -0,0 +1,18 @@
++// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++/*
++ * Device Tree Source for the RZ/G2L Apollo board
++ *
++ * Copyright (C) 2024 Regulus Corp.
++ */
++
++/dts-v1/;
++#include "r9a07g044l2.dtsi"
++#include "rzg2l-smarc-som.dtsi"
++#include "rzg2l-smarc-pinfunction.dtsi"
++#include "rz-gnk-smarc-common.dtsi"
++
++
++/ {
++	model = "Renesas Apollo Board based on GNK";
++	compatible = "renesas,apollo", "renesas,r9a07g044l2", "renesas,r9a07g044";
++};
+-- 
+2.34.1
+

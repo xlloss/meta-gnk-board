@@ -1,0 +1,27 @@
+From cd6b1161ff50d2232427dd3733d92837cb6cdf1c Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 18:27:17 +0800
+Subject: [PATCH 17/32] [DTS|PWM] add gtp-4 (pwm function) pinmux
+
+---
+ arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+index 5fbb19546295..bc8449c15994 100644
+--- a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+@@ -110,4 +110,10 @@ usb1_pins: usb1 {
+ 		pinmux = <RZG2L_PORT_PINMUX(42, 0, 1)>, /* VBUS */
+ 			 <RZG2L_PORT_PINMUX(42, 1, 1)>; /* OVC */
+ 	};
++
++	/* for pwm function */
++	gpt4_pins: gpt4 {
++		pinmux = <RZG2L_PORT_PINMUX(43, 0, 2)>, /* Channel A */
++			 <RZG2L_PORT_PINMUX(43, 1, 2)>; /* Channel B */
++	};
+ };
+-- 
+2.34.1
+

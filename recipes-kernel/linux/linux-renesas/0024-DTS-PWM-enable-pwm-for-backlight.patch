@@ -1,0 +1,28 @@
+From b6e9eba0d8010f92b5c9d19dc9ca7c72133053e7 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 20:18:38 +0800
+Subject: [PATCH 24/32] [DTS|PWM] enable pwm for backlight
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+index e793d109a4bc..cc961a4849f2 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -26,3 +26,11 @@ channel0 {
+ &scif1 {
+ 	status = "disabled";
+ };
++
++&gpt4 {
++	status = "okay";
++};
++
++&pwm_backlight {
++	status = "okay";
++};
+-- 
+2.34.1
+

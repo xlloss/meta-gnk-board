@@ -1,0 +1,39 @@
+From a95984fe16d85c7debafa047c145186156092b84 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 16:14:00 +0800
+Subject: [PATCH 06/32] [DTB] use apollo board pinmux
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts        | 2 +-
+ arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+index d3a55bd8c888..9a4124dcecb9 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -8,7 +8,7 @@
+ /dts-v1/;
+ #include "r9a07g044l2.dtsi"
+ #include "rzg2l-smarc-som.dtsi"
+-#include "rzg2l-smarc-pinfunction.dtsi"
++#include "rzg2l-apollo-pinfunction.dtsi"
+ #include "rz-gnk-smarc-common.dtsi"
+ 
+ 
+diff --git a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+index f7ab20f339c7..81252b932825 100644
+--- a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+@@ -2,7 +2,7 @@
+ /*
+  * Device Tree Source for the RZG2L APOLLO pincontrol parts
+  *
+- * Copyright (C) 2022 Regulus Corp.
++ * Copyright (C) 2024 Regulus Corp.
+  */
+ 
+ #include <dt-bindings/gpio/gpio.h>
+-- 
+2.34.1
+

@@ -1,0 +1,25 @@
+From 02357d0f7613482112b2c9ddc599b31b804023ec Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 19:27:18 +0800
+Subject: [PATCH 21/32] [DTS|ADC] fixed adc trigger pinmux
+
+---
+ arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+index 1b37c038ad77..d48ea51fecb9 100644
+--- a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+@@ -163,4 +163,8 @@ clk {
+ 			pinmux = <RZG2L_PORT_PINMUX(6, 0, 1)>; /* CLK */
+ 		};
+ 	};
++
++	adc_pins: adc {
++		pinmux = <RZG2L_PORT_PINMUX(42, 2, 1)>; /* ADC_TRG */
++	};
+ };
+-- 
+2.34.1
+

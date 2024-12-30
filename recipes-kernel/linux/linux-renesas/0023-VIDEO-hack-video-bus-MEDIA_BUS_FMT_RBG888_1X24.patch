@@ -1,0 +1,25 @@
+From 15615f02dd1e7b5874719bf5005ab90b1610835e Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 14:21:50 +0800
+Subject: [PATCH 23/32] [VIDEO] hack video bus MEDIA_BUS_FMT_RBG888_1X24
+
+---
+ drivers/gpu/drm/panel/panel-simple.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 1a87cc445b5e..70f7935ddb5e 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -448,6 +448,8 @@ static int panel_dpi_probe(struct device *dev,
+ 	/* We do not know the connector for the DT node, so guess it */
+ 	desc->connector_type = DRM_MODE_CONNECTOR_DPI;
+ 
++	desc->bus_format = MEDIA_BUS_FMT_RBG888_1X24;
++	desc->bpc = 6;
+ 	panel->desc = desc;
+ 
+ 	return 0;
+-- 
+2.34.1
+

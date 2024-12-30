@@ -1,0 +1,23 @@
+From 7496e448d853275135d702d35e39f046ad5447eb Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 20:27:32 +0800
+Subject: [PATCH 28/32] [DTS|I2C] enable i2c-0
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+index 35e19a9faecf..1da16fd897cd 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -51,3 +51,6 @@ &ov5645 {
+ 	status = "okay";
+ };
+ 
++&i2c0 {
++	status = "okay";
++};
+-- 
+2.34.1
+

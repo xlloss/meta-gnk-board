@@ -1,0 +1,49 @@
+From 172e67da6af42662a90c486294b2bbc6b47f2500 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 14:20:11 +0800
+Subject: [PATCH 02/32] [AUDIO|CM7104] add CM7104 config
+
+---
+ sound/soc/codecs/Kconfig  | 5 +++++
+ sound/soc/codecs/Makefile | 2 ++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+index bc80077e51b3..76d212d51db9 100644
+--- a/sound/soc/codecs/Kconfig
++++ b/sound/soc/codecs/Kconfig
+@@ -1713,6 +1713,11 @@ config SND_SOC_ZX_AUD96P22
+ 	depends on I2C
+ 	select REGMAP_I2C
+ 
++config SND_SOC_CM7104_48K
++	tristate "CMedia CM7104 CODEC"
++	depends on ARCH_RZG2L
++	default y if ARCH_RZG2L=y
++
+ # Amp
+ config SND_SOC_LM4857
+ 	tristate
+diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
+index 11ce98c25d6c..22f0be8739dd 100644
+--- a/sound/soc/codecs/Makefile
++++ b/sound/soc/codecs/Makefile
+@@ -297,6 +297,7 @@ snd-soc-wm-hubs-objs := wm_hubs.o
+ snd-soc-wsa881x-objs := wsa881x.o
+ snd-soc-zl38060-objs := zl38060.o
+ snd-soc-zx-aud96p22-objs := zx_aud96p22.o
++snd-soc-cm7104-objs := cm7104_48k.o
+ # Amp
+ snd-soc-max9877-objs := max9877.o
+ snd-soc-max98504-objs := max98504.o
+@@ -607,6 +608,7 @@ obj-$(CONFIG_SND_SOC_WM_HUBS)	+= snd-soc-wm-hubs.o
+ obj-$(CONFIG_SND_SOC_WSA881X)	+= snd-soc-wsa881x.o
+ obj-$(CONFIG_SND_SOC_ZL38060)	+= snd-soc-zl38060.o
+ obj-$(CONFIG_SND_SOC_ZX_AUD96P22) += snd-soc-zx-aud96p22.o
++obj-$(CONFIG_SND_SOC_CM7104) += snd-soc-cm7104.o
+ 
+ # Amp
+ obj-$(CONFIG_SND_SOC_MAX9877)	+= snd-soc-max9877.o
+-- 
+2.34.1
+

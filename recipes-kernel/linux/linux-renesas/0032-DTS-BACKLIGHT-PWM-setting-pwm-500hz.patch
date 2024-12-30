@@ -1,0 +1,25 @@
+From d1f251299dda28798251a97c7ec21a3e03def049 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 21:15:54 +0800
+Subject: [PATCH 32/32] [DTS|BACKLIGHT|PWM] setting pwm 500hz
+
+---
+ arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index ab4aa8d5d8a3..b404e8e57735 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -169,7 +169,7 @@ vccq_sdhi1: regulator-vccq-sdhi1 {
+ 	pwm_backlight: pwm_backlight{
+ 		compatible = "pwm-backlight";
+ 		status = "disabled";
+-		pwms = <&gpt3 0 20000>;
++		pwms = <&gpt3 0 2000000>;
+ 		brightness-levels = <0 50 80 110 140 170 200 220 230 240 255>;
+ 		default-brightness-level = <10>;
+ 	};
+-- 
+2.34.1
+

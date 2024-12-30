@@ -1,0 +1,26 @@
+From 85163c7f7590f178f41e966b432b988d58d3365c Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 18:24:14 +0800
+Subject: [PATCH 16/32] [DTS|USB] add usb-1 pinmux
+
+---
+ arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+index f13485010bd7..5fbb19546295 100644
+--- a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+@@ -105,4 +105,9 @@ usb0_pins: usb0 {
+ 			 <RZG2L_PORT_PINMUX(5, 0, 1)>, /* OVC */
+ 			 <RZG2L_PORT_PINMUX(5, 1, 1)>; /* OTG_ID */
+ 	};
++
++	usb1_pins: usb1 {
++		pinmux = <RZG2L_PORT_PINMUX(42, 0, 1)>, /* VBUS */
++			 <RZG2L_PORT_PINMUX(42, 1, 1)>; /* OVC */
++	};
+ };
+-- 
+2.34.1
+

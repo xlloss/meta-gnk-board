@@ -39,6 +39,38 @@ SRC_URI_append = " \
 	file://0034-gnk_g2l_v2l-modify-gnk-smarcboard-name-in-dts.patch \
 	file://0035-gnk-g2l-fixed-g2l-dtb-configure.patch \
 	file://0036-gnk-g2l-fixed-build-error.patch \
+	file://0001-AUDIO-CM7104-add-cm7104-alsa-driver.patch \
+	file://0002-AUDIO-CM7104-add-CM7104-config.patch \
+	file://0003-DTB-Makefile-remove-R9A07G043-rzg2ul-dtb.patch \
+	file://0004-DTB-add-apollo-board-dts.patch \
+	file://0005-DTB-CAN_BUS-add-canbus-pin-pmux.patch \
+	file://0006-DTB-use-apollo-board-pinmux.patch \
+	file://0007-DTS-SPI-add-spi1-pinmux.patch \
+	file://0008-DTS-SPIDEV-fixed-spidev-compatible-name.patch \
+	file://0009-DTS-SCIF-add-scif0-pinmux-debug-port.patch \
+	file://0010-DTS-SCIF-add-scif2-pinmux.patch \
+	file://0011-DTS-I2C-add-i2c-0-pin-setting.patch \
+	file://0012-DTS-I2C-add-i2c-1-pin-setting.patch \
+	file://0013-DTS-I2C-add-i2c-3-pinmux.patch \
+	file://0014-DTS-SDHI-add-sdhi-1-pinmux.patch \
+	file://0015-DTS-USB-add-usb-0-pinmux.patch \
+	file://0016-DTS-USB-add-usb-1-pinmux.patch \
+	file://0017-DTS-PWM-add-gtp-4-pwm-function-pinmux.patch \
+	file://0018-CANBUS-DEBUG_PORT-avoid-debug-port-unavailable.patch \
+	file://0019-DTS-CAN-disabled-scif1-for-enabling-canbus-1.patch \
+	file://0020-DTS-DISPLAY-add-RGB-pinmux.patch \
+	file://0021-DTS-ADC-fixed-adc-trigger-pinmux.patch \
+	file://0022-VIDEO-hack-virtual-channel-0.patch \
+	file://0023-VIDEO-hack-video-bus-MEDIA_BUS_FMT_RBG888_1X24.patch \
+	file://0024-DTS-PWM-enable-pwm-for-backlight.patch \
+	file://0025-DTS-PANEL-change-panel-to-mipi_panel.patch \
+	file://0026-DTS-DSI-PANEL-enable-mipi-dsi-panel.patch \
+	file://0027-DTS-CSI-enable-csi2-ov5645.patch \
+	file://0028-DTS-I2C-enable-i2c-0.patch \
+	file://0029-DTS-RGB-enable-rgb-panel.patch \
+	file://0030-DTS-AUDIO-add-cm7104-node.patch \
+	file://0031-DTS-I2C-disabled-i2c_gpio.patch \
+	file://0032-DTS-BACKLIGHT-PWM-setting-pwm-500hz.patch \
 "
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"

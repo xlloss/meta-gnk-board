@@ -1,0 +1,29 @@
+From 279d8df0b1bcca49023397616d500bbb023ae8af Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 20:25:56 +0800
+Subject: [PATCH 27/32] [DTS|CSI] enable csi2, ov5645
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+index cc1c20ba4993..35e19a9faecf 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -42,3 +42,12 @@ &dsi0 {
+ &mipi_panel {
+ 	status = "okay";
+ };
++
++&csi2 {
++	status = "okay";
++};
++
++&ov5645 {
++	status = "okay";
++};
++
+-- 
+2.34.1
+

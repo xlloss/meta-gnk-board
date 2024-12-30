@@ -1,0 +1,25 @@
+From 7963c74456cf8c8cb0b8121afd54f5716db5c618 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 19:30:31 +0800
+Subject: [PATCH 03/32] [DTB|Makefile] remove R9A07G043 rzg2ul dtb
+
+---
+ arch/arm64/boot/dts/renesas/Makefile | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/Makefile b/arch/arm64/boot/dts/renesas/Makefile
+index f8e10f85b23f..92f7db0542cf 100644
+--- a/arch/arm64/boot/dts/renesas/Makefile
++++ b/arch/arm64/boot/dts/renesas/Makefile
+@@ -84,8 +84,6 @@ dtb-$(CONFIG_ARCH_R8A77995) += r8a77995-draak.dtb
+ 
+ dtb-$(CONFIG_ARCH_R8A779A0) += r8a779a0-falcon.dtb
+ 
+-dtb-$(CONFIG_ARCH_R9A07G043) += r9a07g043u11-smarc.dtb
+-dtb-$(CONFIG_ARCH_R9A07G043) += r9a07g043u11-dev.dtb
+ 
+ dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044c2-smarc.dtb
+ dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044c2-dev.dtb
+-- 
+2.34.1
+

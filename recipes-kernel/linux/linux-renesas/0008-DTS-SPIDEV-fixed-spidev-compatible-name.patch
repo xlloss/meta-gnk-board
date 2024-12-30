@@ -1,0 +1,25 @@
+From 682fbab3c1614601e0cd5dfc2a5120417f3a3c02 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 17:15:05 +0800
+Subject: [PATCH 08/32] [DTS|SPIDEV] fixed spidev compatible name
+
+---
+ arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index 6f0bd78dc307..774f0057dd79 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -565,7 +565,7 @@ phy1: ethernet-phy@7 {
+ &spi1 {
+ 	status = "disabled";
+ 	spidev0: spi@0 {
+-		compatible = "spidev";
++		compatible = "rohm,dh2228fv";
+ 		reg = <0>;
+ 		spi-max-frequency = <25000000>;
+ 	};
+-- 
+2.34.1
+

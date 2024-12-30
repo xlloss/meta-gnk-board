@@ -1,0 +1,28 @@
+From dd45c8fd756c3377aca6a31f72b0ed9303831625 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 18:05:06 +0800
+Subject: [PATCH 10/32] [DTS|SCIF] add scif2 pinmux
+
+---
+ arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+index 05b31dbc211e..ca809a0a0760 100644
+--- a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+@@ -45,4 +45,11 @@ scif0_pins: scif0 {
+ 		pinmux = <RZG2L_PORT_PINMUX(38, 0, 1)>,	/* TxD */
+ 			<RZG2L_PORT_PINMUX(38, 1, 1)>;	/* RxD */
+ 	};
++
++	scif2_pins: scif2 {
++		pinmux = <RZG2L_PORT_PINMUX(48, 0, 1)>, /* TxD */
++			 <RZG2L_PORT_PINMUX(48, 1, 1)>, /* RxD */
++			 <RZG2L_PORT_PINMUX(48, 3, 1)>, /* CTS# */
++			 <RZG2L_PORT_PINMUX(48, 4, 1)>; /* RTS# */
++	};
+ };
+-- 
+2.34.1
+

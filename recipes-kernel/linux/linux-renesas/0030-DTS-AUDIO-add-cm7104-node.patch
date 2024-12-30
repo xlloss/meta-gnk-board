@@ -1,0 +1,86 @@
+From 40ca8b5605ddf4cd8b5ab6ff544a5693c4401860 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 21:07:53 +0800
+Subject: [PATCH 30/32] [DTS|AUDIO] add cm7104 node
+
+---
+ .../boot/dts/renesas/rz-gnk-smarc-common.dtsi | 49 +++----------------
+ 1 file changed, 7 insertions(+), 42 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index 610eb7d1ba38..ab4aa8d5d8a3 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -143,7 +143,7 @@ cpu_dai: simple-audio-card,cpu {
+ 		};
+ 
+ 		codec_dai: simple-audio-card,codec {
+-			sound-dai = <&codec_da7218>;
++			sound-dai = <&cm7104>;
+ 			clocks = <&audio_mclock>;
+ 		};
+ 	};
+@@ -189,6 +189,12 @@ vgg804834_ts: vgg804834_ts {
+ 			tsirq-gpios = <&pinctrl RZG2L_GPIO(47, 1) GPIO_ACTIVE_LOW>;
+ 		};
+ 	};
++
++	cm7104: cm7104 {
++		compatible = "cmedia,cm7104";
++		#sound-dai-cells = <0>;
++		status = "okay";
++	};
+ };
+ 
+ &audio_clk1{
+@@ -275,47 +281,6 @@ versa3: versa3@68 {
+ 		clock-divider-read-only = <1>, <1>, <1>, <1>, <1>;
+ 		clock-flags = <2176>, <2176>, <2176>, <2052>, <2176>, <2048>;
+ 	};
+-
+-	codec_da7218: codec_da7218@1a {
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		#sound-dai-cells = <0>;
+-		compatible = "dlg,da7218";
+-		reg = <0x1a>;
+-
+-		interrupt-parent = <&pinctrl>;
+-		interrupts = <RZG2L_GPIO(47, 3) IRQ_TYPE_LEVEL_LOW>;
+-		wakeup-source;
+-
+-		VDD-supply = <&vdd_1v8>;
+-		VDDMIC-supply = <&vdd_3v3>;
+-		VDDIO-supply = <&vdd_3v3>;
+-
+-		clocks = <&audio_mclock>;
+-		clock-names = "mclk";
+-
+-		dlg,micbias1-lvl-millivolt = <2600>;
+-
+-		dlg,micbias2-lvl-millivolt = <2600>;
+-		dlg,mic1-amp-in-sel = "diff";
+-
+-		dlg,mic2-amp-in-sel = "diff";
+-
+-		dlg,dmic1-data-sel = "lrise_rfall";
+-		dlg,dmic1-samplephase = "on_clkedge";
+-		dlg,dmic1-clkrate-hz = <3000000>;
+-
+-		dlg,dmic2-data-sel = "lrise_rfall";
+-		dlg,dmic2-samplephase = "on_clkedge";
+-		dlg,dmic2-clkrate-hz = <3000000>;
+-
+-		da7218_hpldet {
+-			dlg,jack-rate-us = <40>;
+-			dlg,jack-debounce = <2>;
+-			dlg,jack-threshold-pct = <84>;
+-			dlg,hyst;
+-		};
+-	};
+ };
+ 
+ &ohci0 {
+-- 
+2.34.1
+

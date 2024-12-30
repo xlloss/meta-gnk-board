@@ -1,0 +1,111 @@
+From 53c858985e63eb3271034862c896f38db0748f70 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 20:53:30 +0800
+Subject: [PATCH 29/32] [DTS|RGB] enable rgb panel
+
+---
+ .../boot/dts/renesas/r9a07g044l2-apollo.dts   | 80 +++++++++++++++++++
+ 1 file changed, 80 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+index 1da16fd897cd..6931065c7091 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -11,10 +11,75 @@
+ #include "rzg2l-apollo-pinfunction.dtsi"
+ #include "rz-gnk-smarc-common.dtsi"
+ 
++/*
++ * ENABLE_PANEL_640_480_1024_768 == 1 : 640  x 480
++ * ENABLE_PANEL_640_480_1024_768 == 0 : 1024 x 768
++ */
++#define ENABLE_PANEL_640_480_1024_768 1
+ 
+ / {
+ 	model = "Renesas Apollo Board based on GNK";
+ 	compatible = "renesas,apollo", "renesas,r9a07g044l2", "renesas,r9a07g044";
++
++	vdd_panel_3v3: vdd_panel_3v3 {
++		compatible = "regulator-fixed";
++		regulator-name = "lcd-3v3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++	};
++
++	panel_rgb: panel-rgb {
++		status = "okay";
++		compatible = "panel-dpi";
++		backlight = <&pwm_backlight>;
++		enable-gpios = <&pinctrl RZG2L_GPIO(47, 2) GPIO_ACTIVE_HIGH>;
++		power-supply = <&vdd_panel_3v3>;
++		/* panel-timing is used for "panel-dpi" compatible */
++		#if ENABLE_PANEL_640_480_1024_768
++		panel-timing {
++			clock-frequency = <25200000>;
++			hactive = <640>;
++			vactive = <480>;
++
++			hsync-len = <96>;
++			hfront-porch = <16>;
++			hback-porch = <48>;
++
++			vsync-len = <2>;
++			vfront-porch = <10>;
++			vback-porch = <33>;
++
++			hsync-active = <1>;
++			vsync-active = <1>;
++			de-active = <1>;
++			pixelclk-active = <1>;
++		};
++		#else
++		panel-timing {
++			clock-frequency = <70000000>;
++			hactive = <1024>;
++			vactive = <768>;
++
++			hsync-len = <136>;
++			hfront-porch = <24>;
++			hback-porch = <160>;
++
++			vsync-len = <6>;
++			vfront-porch = <3>;
++			vback-porch = <29>;
++
++			hsync-active = <1>;
++			vsync-active = <1>;
++			de-active = <1>;
++			pixelclk-active = <1>;
++		};
++		#endif
++		port {
++			panel_in_rgb: endpoint {
++				remote-endpoint = <&du_out_rgb>;
++			};
++		};
++	};
+ };
+ 
+ &canfd {
+@@ -54,3 +119,18 @@ &ov5645 {
+ &i2c0 {
+ 	status = "okay";
+ };
++
++&du {
++	pinctrl-0 = <&du_pins>;
++	pinctrl-names = "default";
++
++	status = "okay";
++
++	ports {
++		port@0 {
++			du_out_rgb: endpoint {
++				remote-endpoint = <&panel_in_rgb>;
++			};
++		};
++	};
++};
+-- 
+2.34.1
+

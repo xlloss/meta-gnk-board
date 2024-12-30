@@ -1,0 +1,27 @@
+From a29e1da61f8d9dc0b29fdbc491f218403a138eca Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 21:10:49 +0800
+Subject: [PATCH 31/32] [DTS|I2C] disabled i2c_gpio
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+index 6931065c7091..1db3e5f14854 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -82,6 +82,10 @@ panel_in_rgb: endpoint {
+ 	};
+ };
+ 
++&i2c_gpio {
++	status = "disabled";
++};
++
+ &canfd {
+ 	channel0 {
+ 		status = "disabled";
+-- 
+2.34.1
+

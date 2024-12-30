@@ -1,0 +1,26 @@
+From e375b5d06d8d1bb1018acf997570041ee0ba071b Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 18:08:38 +0800
+Subject: [PATCH 11/32] [DTS|I2C] add i2c-0 pin setting
+
+---
+ arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+index ca809a0a0760..e24c267c8bc9 100644
+--- a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+@@ -52,4 +52,9 @@ scif2_pins: scif2 {
+ 			 <RZG2L_PORT_PINMUX(48, 3, 1)>, /* CTS# */
+ 			 <RZG2L_PORT_PINMUX(48, 4, 1)>; /* RTS# */
+ 	};
++
++	i2c0_pins: i2c0 {
++		pins = "RIIC0_SDA", "RIIC0_SCL";
++		input-enable;
++	};
+ };
+-- 
+2.34.1
+

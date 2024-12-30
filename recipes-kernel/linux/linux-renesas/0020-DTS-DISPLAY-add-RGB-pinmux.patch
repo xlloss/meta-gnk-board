@@ -1,0 +1,68 @@
+From 853882546b969bc22f350b69691cb9f03f2e3bb4 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 19:10:35 +0800
+Subject: [PATCH 20/32] [DTS|DISPLAY] add RGB pinmux
+
+---
+ .../dts/renesas/rzg2l-apollo-pinfunction.dtsi | 47 +++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+index bc8449c15994..1b37c038ad77 100644
+--- a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+@@ -116,4 +116,51 @@ gpt4_pins: gpt4 {
+ 		pinmux = <RZG2L_PORT_PINMUX(43, 0, 2)>, /* Channel A */
+ 			 <RZG2L_PORT_PINMUX(43, 1, 2)>; /* Channel B */
+ 	};
++
++	du_pins: du {
++		groups = "disp_bgr888", "disp_sync", "disp_de", "disp_clk";
++		function = "disp";
++		data {
++			pinmux = <RZG2L_PORT_PINMUX(7, 2, 1)>,
++				 <RZG2L_PORT_PINMUX(8, 0, 1)>,
++				 <RZG2L_PORT_PINMUX(8, 1, 1)>,
++				 <RZG2L_PORT_PINMUX(8, 2, 1)>,
++				 <RZG2L_PORT_PINMUX(9, 0, 1)>,
++				 <RZG2L_PORT_PINMUX(9, 1, 1)>,
++				 <RZG2L_PORT_PINMUX(10, 0, 1)>,
++				 <RZG2L_PORT_PINMUX(10, 1, 1)>,
++				 <RZG2L_PORT_PINMUX(11, 0, 1)>,
++				 <RZG2L_PORT_PINMUX(11, 1, 1)>,
++				 <RZG2L_PORT_PINMUX(12, 0, 1)>,
++				 <RZG2L_PORT_PINMUX(12, 1, 1)>,
++				 <RZG2L_PORT_PINMUX(13, 0, 1)>,
++				 <RZG2L_PORT_PINMUX(13, 1, 1)>,
++				 <RZG2L_PORT_PINMUX(13, 2, 1)>,
++				 <RZG2L_PORT_PINMUX(14, 0, 1)>,
++				 <RZG2L_PORT_PINMUX(14, 1, 1)>,
++				 <RZG2L_PORT_PINMUX(15, 0, 1)>,
++				 <RZG2L_PORT_PINMUX(15, 1, 1)>,
++				 <RZG2L_PORT_PINMUX(16, 0, 1)>,
++				 <RZG2L_PORT_PINMUX(16, 1, 1)>,
++				 <RZG2L_PORT_PINMUX(17, 0, 1)>,
++				 <RZG2L_PORT_PINMUX(17, 1, 1)>,
++				 <RZG2L_PORT_PINMUX(17, 2, 1)>;
++				 drive-strength = <2>;
++		};
++
++		sync {
++			pinmux = <RZG2L_PORT_PINMUX(6, 1, 1)>, /* HSYNC */
++				 <RZG2L_PORT_PINMUX(7, 0, 1)>; /* VSYNC */
++				 drive-strength = <2>;
++		};
++
++		de {
++			pinmux = <RZG2L_PORT_PINMUX(7, 1, 1)>; /* DE */
++			drive-strength = <2>;
++		};
++
++		clk {
++			pinmux = <RZG2L_PORT_PINMUX(6, 0, 1)>; /* CLK */
++		};
++	};
+ };
+-- 
+2.34.1
+

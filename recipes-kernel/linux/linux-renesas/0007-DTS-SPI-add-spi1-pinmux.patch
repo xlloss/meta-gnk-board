@@ -1,0 +1,28 @@
+From c87cb58690d70249cba4eaf1c8bda91580825a5a Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 17:12:19 +0800
+Subject: [PATCH 07/32] [DTS|SPI] add spi1 pinmux
+
+---
+ arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+index 81252b932825..d26c0fca44bc 100644
+--- a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+@@ -33,4 +33,11 @@ can1-stb-hog {
+ 		output-low;
+ 		line-name = "can1_stb";
+ 	};
++
++	spi1_pins: spi1 {
++		pinmux = <RZG2L_PORT_PINMUX(44, 0, 1)>, /* CK */
++			 <RZG2L_PORT_PINMUX(44, 1, 1)>, /* MOSI */
++			 <RZG2L_PORT_PINMUX(44, 2, 1)>, /* MISO */
++			 <RZG2L_PORT_PINMUX(44, 3, 1)>; /* SSL */
++	};
+ };
+-- 
+2.34.1
+

@@ -1,0 +1,53 @@
+From 4e38a4da0a456b3b51af52a30f27d52b3f4be891 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 20:21:22 +0800
+Subject: [PATCH 25/32] [DTS|PANEL] change panel to mipi_panel
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g044l2-smarc-gnk.dts | 2 +-
+ arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts | 2 +-
+ arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-smarc-gnk.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-smarc-gnk.dts
+index 26ef79a808cb..601e392aa6cc 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-smarc-gnk.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-smarc-gnk.dts
+@@ -73,7 +73,7 @@ &ov5645 {
+ 	status = "okay";
+ };
+ 
+-&panel {
++&mipi_panel {
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts b/arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts
+index a64a2b2e6190..53a7382fdacd 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g054l2-smarc-gnk.dts
+@@ -98,7 +98,7 @@ &ov5645 {
+ 	status = "okay";
+ };
+ 
+-&panel {
++&mipi_panel {
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index 774f0057dd79..610eb7d1ba38 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -473,7 +473,7 @@ dsi0_out: endpoint {
+ 		};
+ 	};
+ 
+-	panel: mipi_panel {
++	mipi_panel: mipi_panel {
+ 		compatible = "evervision,vgg804834-otslwc";
+ 		reg = <0>;
+ 		reset-gpios = <&pinctrl RZG2L_GPIO(46, 0) GPIO_ACTIVE_LOW>;
+-- 
+2.34.1
+

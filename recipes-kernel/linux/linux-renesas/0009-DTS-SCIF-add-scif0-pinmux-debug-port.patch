@@ -1,0 +1,26 @@
+From 438e89737196f268c61e4d34832ede93bf14d2c7 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 18:03:06 +0800
+Subject: [PATCH 09/32] [DTS|SCIF] add scif0 pinmux (debug port)
+
+---
+ arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+index d26c0fca44bc..05b31dbc211e 100644
+--- a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+@@ -40,4 +40,9 @@ spi1_pins: spi1 {
+ 			 <RZG2L_PORT_PINMUX(44, 2, 1)>, /* MISO */
+ 			 <RZG2L_PORT_PINMUX(44, 3, 1)>; /* SSL */
+ 	};
++
++	scif0_pins: scif0 {
++		pinmux = <RZG2L_PORT_PINMUX(38, 0, 1)>,	/* TxD */
++			<RZG2L_PORT_PINMUX(38, 1, 1)>;	/* RxD */
++	};
+ };
+-- 
+2.34.1
+

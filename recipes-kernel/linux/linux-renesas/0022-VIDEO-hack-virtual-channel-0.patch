@@ -1,0 +1,24 @@
+From b17929f065868754644e6a176da3abe60db223d3 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 30 Dec 2024 14:21:25 +0800
+Subject: [PATCH 22/32] [VIDEO] hack virtual channel 0
+
+---
+ drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c b/drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c
+index db0c3b957713..2329c51bbbc1 100644
+--- a/drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c
++++ b/drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c
+@@ -314,6 +314,7 @@ static void rzg2l_mipi_dsi_set_display_timing(struct rzg2l_mipi_dsi *mipi_dsi)
+ 	if (mipi_dsi->mode_flags & MIPI_DSI_MODE_VIDEO_BURST)
+ 		vich1ppsetr &= ~VICH1PPSETR_TXESYNC_PULSE;
+ 
++	vich1ppsetr |= VICH1PPSETR_VC(0);
+ 	rzg2l_mipi_dsi_write(mipi_dsi->link_mmio, VICH1PPSETR, vich1ppsetr);
+ 
+ 	/* Configuration for Video Parameters */
+-- 
+2.34.1
+
