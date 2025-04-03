@@ -1,0 +1,25 @@
+From f2736bdfc0690417e8685874289677328e1b046d Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Tue, 14 Jan 2025 20:35:47 +0800
+Subject: [PATCH] [SDHC|CH1] fixed sdcard read fail
+
+---
+ board/renesas/rzg2l-dev/rzg2l-dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/board/renesas/rzg2l-dev/rzg2l-dev.c b/board/renesas/rzg2l-dev/rzg2l-dev.c
+index 371d6122ba..2ac5c94eca 100644
+--- a/board/renesas/rzg2l-dev/rzg2l-dev.c
++++ b/board/renesas/rzg2l-dev/rzg2l-dev.c
+@@ -74,7 +74,7 @@ void s_init(void)
+ 	/* SD1 power control: P39_1 = 0; P39_2 = 1; */
+ 	*(volatile u32 *)(PFC_PMC37) &= 0xFFFFFFF9; /* Port func mode 0b00 */
+ 	*(volatile u32 *)(PFC_PM37) = (*(volatile u32 *)(PFC_PM37) & 0xFFFFFFC3) | 0x28; /* Port output mode 0b1010 */
+-#if CONFIG_TARGET_SMARC_RZG2L || CONFIG_TARGET_SMARC_RZG2L_GNK
++#if CONFIG_TARGET_SMARC_RZG2L || CONFIG_TARGET_SMARC_RZG2L_GNK || CONFIG_TARGET_RZG2L_APOLLO
+ 	*(volatile u32 *)(PFC_P37) = (*(volatile u32 *)(PFC_P37) & 0xFFFFFFF9) | 0x6;	/* Port 39[2:1] output value 0b11*/
+ #else
+ 
+-- 
+2.34.1
+
