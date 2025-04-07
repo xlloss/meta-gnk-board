@@ -1,0 +1,35 @@
+From 3486d2c77e82e4122a0804a771cbc6fe83caa900 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 31 Mar 2025 17:18:03 +0800
+Subject: [PATCH 41/50] [DTB|RGB_PANEL|DSI_PANEL] disable rgb_panel, enable
+ dsi_panel
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+index ac8d8c587bb3..c112bb43c134 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -29,7 +29,7 @@ vdd_panel_3v3: vdd_panel_3v3 {
+ 	};
+ 
+ 	panel_rgb: panel_rgb {
+-		status = "okay";
++		status = "disabled";
+ 		compatible = "panel-dpi";
+ 		backlight = <&pwm_backlight>;
+ 		enable-gpios = <&pinctrl RZG2L_GPIO(47, 2) GPIO_ACTIVE_LOW>;
+@@ -105,7 +105,7 @@ &pwm_backlight {
+ };
+ 
+ &dsi0 {
+-	status = "disabled";
++	status = "okay";
+ };
+ 
+ &csi2 {
+-- 
+2.34.1
+

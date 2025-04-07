@@ -1,0 +1,25 @@
+From f20fdd184489dc34108a6261d076f33e773a643f Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 31 Mar 2025 09:35:59 +0800
+Subject: [PATCH 35/50] [DTB] fixed wrong node name
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+index 8bc04493e5ea..25e935203ef3 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -28,7 +28,7 @@ vdd_panel_3v3: vdd_panel_3v3 {
+ 		regulator-max-microvolt = <3300000>;
+ 	};
+ 
+-	panel_rgb: panel-rgb {
++	panel_rgb: panel_rgb {
+ 		status = "okay";
+ 		compatible = "panel-dpi";
+ 		backlight = <&pwm_backlight>;
+-- 
+2.34.1
+

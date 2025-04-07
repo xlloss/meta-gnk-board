@@ -1,0 +1,73 @@
+From 4ca4fac2e4129e2c093094d0346d344f8a90e613 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Wed, 2 Apr 2025 14:25:50 +0800
+Subject: [PATCH 48/50] [DPI] add 6bit 8bit select function for panel
+
+---
+ .../arm64/boot/dts/renesas/apollo_lvds_10.dts |  4 +++-
+ drivers/gpu/drm/panel/panel-simple.c          | 20 +++++++++++++++++++
+ 2 files changed, 23 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/apollo_lvds_10.dts b/arch/arm64/boot/dts/renesas/apollo_lvds_10.dts
+index 1317912859c2..ad638be6f911 100644
+--- a/arch/arm64/boot/dts/renesas/apollo_lvds_10.dts
++++ b/arch/arm64/boot/dts/renesas/apollo_lvds_10.dts
+@@ -9,7 +9,7 @@
+ #include "r9a07g044l2-apollo.dtsi"
+ 
+ / {
+-	model = "Renesas Apollo Board LVDS 10.0 inch";
++	model = "Renesas Apollo Board LVDS 10.0 inch 8bit";
+ 	compatible = "renesas,apollo", "renesas,r9a07g044l2", "renesas,r9a07g044";
+ 
+ 	panel_rgb: panel_rgb {
+@@ -17,6 +17,8 @@ panel_rgb: panel_rgb {
+ 		compatible = "panel-dpi";
+ 		backlight = <&pwm_backlight>;
+ 		enable-gpios = <&pinctrl RZG2L_GPIO(47, 2) GPIO_ACTIVE_LOW>;
++		/* default low 8bit */
++		sel68-gpios = <&pinctrl RZG2L_GPIO(40, 2) GPIO_ACTIVE_HIGH>;
+ 		power-supply = <&vdd_panel_3v3>;
+ 		/* panel-timing is used for "panel-dpi" compatible */
+ 		panel-timing {
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 5f5bb98c1a87..f0570212643b 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -110,6 +110,17 @@ struct panel_simple {
+ 
+ 	struct gpio_desc *enable_gpio;
+ 	struct gpio_desc *hpd_gpio;
++	/* select panel 6bit or 8bit
++	 *
++	 * LCD_10.4 Innolux G104XCE-L01
++	 *     Low     8 bit input
++	 *     High    6 bit input
++	 *
++	 * LCD_G065VN01
++	 *     Low     6 bit input;
++	 *     High    8 bit input.
++	 */
++	struct gpio_desc *sel_6_8_gpio;
+ 
+ 	struct drm_display_mode override_mode;
+ 
+@@ -537,6 +548,15 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
+ 		return err;
+ 	}
+ 
++	panel->sel_6_8_gpio = devm_gpiod_get_optional(dev, "sel68",
++						     GPIOD_OUT_LOW);
++	if (IS_ERR(panel->sel_6_8_gpio)) {
++		err = PTR_ERR(panel->sel_6_8_gpio);
++		if (err != -EPROBE_DEFER)
++			dev_err(dev, "failed to request sel_6_8_gpio: %d\n", err);
++		return err;
++	}
++
+ 	err = of_drm_get_panel_orientation(dev->of_node, &panel->orientation);
+ 	if (err) {
+ 		dev_err(dev, "%pOF: failed to get orientation %d\n", dev->of_node, err);
+-- 
+2.34.1
+

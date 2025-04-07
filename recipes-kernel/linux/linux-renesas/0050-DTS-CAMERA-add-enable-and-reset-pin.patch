@@ -1,0 +1,25 @@
+From a6a2a7cb55fd1088bd004ef7793e9653bc3a9209 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 7 Apr 2025 21:05:07 +0800
+Subject: [PATCH 50/50] [DTS|CAMERA] add enable and reset pin
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dtsi b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dtsi
+index 34c733b38494..b84e06fcdf29 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dtsi
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dtsi
+@@ -55,6 +55,8 @@ &csi2 {
+ 
+ &ov5645 {
+ 	status = "okay";
++	enable-gpios = <&pinctrl RZG2L_GPIO(23, 0) GPIO_ACTIVE_HIGH>;
++	reset-gpios = <&pinctrl RZG2L_GPIO(23, 1) GPIO_ACTIVE_LOW>;
+ };
+ 
+ &i2c0 {
+-- 
+2.34.1
+

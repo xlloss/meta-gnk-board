@@ -1,0 +1,25 @@
+From 186309b944cf5b140b48643139f21154cb6c9ebd Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Wed, 2 Apr 2025 14:39:03 +0800
+Subject: [PATCH 49/50] [DTS|DPI|6.5_INCH] set 6bit for 6.5 inch panel
+
+---
+ arch/arm64/boot/dts/renesas/apollo_lvds_65.dts | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/apollo_lvds_65.dts b/arch/arm64/boot/dts/renesas/apollo_lvds_65.dts
+index 24e7927f69a8..b9caf78bdd43 100644
+--- a/arch/arm64/boot/dts/renesas/apollo_lvds_65.dts
++++ b/arch/arm64/boot/dts/renesas/apollo_lvds_65.dts
+@@ -17,6 +17,8 @@ panel_rgb: panel_rgb {
+ 		compatible = "panel-dpi";
+ 		backlight = <&pwm_backlight>;
+ 		enable-gpios = <&pinctrl RZG2L_GPIO(47, 2) GPIO_ACTIVE_LOW>;
++		/* default high 6bit */
++		sel68-gpios = <&pinctrl RZG2L_GPIO(40, 2) GPIO_ACTIVE_LOW>;
+ 		power-supply = <&vdd_panel_3v3>;
+ 		/* panel-timing is used for "panel-dpi" compatible */
+ 		panel-timing {
+-- 
+2.34.1
+

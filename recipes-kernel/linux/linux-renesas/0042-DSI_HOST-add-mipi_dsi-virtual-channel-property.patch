@@ -1,0 +1,54 @@
+From 64270c7e3be4e9edc55a82fb276f27fc80b3d64e Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 31 Mar 2025 20:53:07 +0800
+Subject: [PATCH 42/50] [DSI_HOST] add mipi_dsi virtual channel property
+
+---
+ drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c b/drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c
+index baefe048a7bb..89228af89092 100644
+--- a/drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c
++++ b/drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c
+@@ -72,6 +72,7 @@ struct rzg2l_mipi_dsi {
+ 	unsigned long hsfreq;
+ 
+ 	bool hsclkmode;	/* 0 for non-continuous and 1 for continuous clock mode */
++	unsigned int mopi_dsi_vc;
+ };
+ 
+ #define bridge_to_rzg2l_mipi_dsi(b) \
+@@ -314,7 +315,7 @@ static void rzg2l_mipi_dsi_set_display_timing(struct rzg2l_mipi_dsi *mipi_dsi)
+ 	if (mipi_dsi->mode_flags & MIPI_DSI_MODE_VIDEO_BURST)
+ 		vich1ppsetr &= ~VICH1PPSETR_TXESYNC_PULSE;
+ 
+-	vich1ppsetr |= VICH1PPSETR_VC(1);
++	vich1ppsetr |= VICH1PPSETR_VC(mipi_dsi->mopi_dsi_vc);
+ 	rzg2l_mipi_dsi_write(mipi_dsi->link_mmio, VICH1PPSETR, vich1ppsetr);
+ 
+ 	/* Configuration for Video Parameters */
+@@ -1029,6 +1030,8 @@ static int rzg2l_mipi_dsi_find_panel_or_bridge(struct rzg2l_mipi_dsi *mipi_dsi)
+ 	struct device_node *node;
+ 	bool is_bridge = false;
+ 	int ret = 0;
++	const char *prop_vc = "dsi-vc";
++	u32 dsi_vc;
+ 
+ 	local_output = of_graph_get_endpoint_by_regs(mipi_dsi->dev->of_node,
+ 						     1, 0);
+@@ -1077,6 +1080,11 @@ static int rzg2l_mipi_dsi_find_panel_or_bridge(struct rzg2l_mipi_dsi *mipi_dsi)
+ 			goto done;
+ 		}
+ 	} else {
++		ret = of_property_read_u32(remote, prop_vc, &dsi_vc);
++		if (ret) {
++			dsi_vc = 0;
++		}
++		mipi_dsi->mopi_dsi_vc = dsi_vc;
+ 		mipi_dsi->panel = of_drm_find_panel(remote);
+ 		if (IS_ERR(mipi_dsi->panel)) {
+ 			ret = PTR_ERR(mipi_dsi->panel);
+-- 
+2.34.1
+

@@ -1,0 +1,27 @@
+From 4adda40de6313c57ba582490d9a7b5a973faf1b8 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 31 Mar 2025 09:37:31 +0800
+Subject: [PATCH 36/50] Revert "[VIDEO] hack video bus
+ MEDIA_BUS_FMT_RBG888_1X24"
+
+This reverts commit 15615f02dd1e7b5874719bf5005ab90b1610835e.
+---
+ drivers/gpu/drm/panel/panel-simple.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 70aec00682f0..2da64faa31d5 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -448,8 +448,6 @@ static int panel_dpi_probe(struct device *dev,
+ 	/* We do not know the connector for the DT node, so guess it */
+ 	desc->connector_type = DRM_MODE_CONNECTOR_DPI;
+ 
+-	desc->bus_format = MEDIA_BUS_FMT_RBG888_1X24;
+-	desc->bpc = 6;
+ 	panel->desc = desc;
+ 
+ 	return 0;
+-- 
+2.34.1
+

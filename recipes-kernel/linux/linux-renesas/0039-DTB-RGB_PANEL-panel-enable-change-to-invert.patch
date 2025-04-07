@@ -1,0 +1,25 @@
+From 16d417d0f4b427e9388669283deba01f95aebe01 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 31 Mar 2025 14:56:58 +0800
+Subject: [PATCH 39/50] [DTB|RGB_PANEL] panel enable change to invert
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+index 092af0558be3..c112bb43c134 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -32,7 +32,7 @@ panel_rgb: panel_rgb {
+ 		status = "disabled";
+ 		compatible = "panel-dpi";
+ 		backlight = <&pwm_backlight>;
+-		enable-gpios = <&pinctrl RZG2L_GPIO(47, 2) GPIO_ACTIVE_HIGH>;
++		enable-gpios = <&pinctrl RZG2L_GPIO(47, 2) GPIO_ACTIVE_LOW>;
+ 		power-supply = <&vdd_panel_3v3>;
+ 		/* panel-timing is used for "panel-dpi" compatible */
+ 		#if ENABLE_PANEL_640_480_1024_768
+-- 
+2.34.1
+

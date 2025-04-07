@@ -1,0 +1,143 @@
+From 98c22ee23dbd0b3aa8dceac2d4e8fe8e16ecacbb Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Mon, 31 Mar 2025 01:17:50 +0800
+Subject: [PATCH 34/50] [DISPLAY|DSI_HDMI] enable ep9593
+
+---
+ arch/arm64/boot/dts/renesas/Makefile          |  4 +--
+ .../boot/dts/renesas/r9a07g044l2-apollo.dts   |  4 ---
+ .../boot/dts/renesas/rz-gnk-smarc-common.dtsi | 14 +++-----
+ drivers/gpu/drm/panel/panel-simple.c          | 34 +++++++++++++++++++
+ drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c      |  2 +-
+ 5 files changed, 41 insertions(+), 17 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/Makefile b/arch/arm64/boot/dts/renesas/Makefile
+index 3bf5071edcca..a1f77daf90d5 100644
+--- a/arch/arm64/boot/dts/renesas/Makefile
++++ b/arch/arm64/boot/dts/renesas/Makefile
+@@ -90,7 +90,7 @@ dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044c2-dev.dtb
+ dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044l2-smarc.dtb
+ dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044l2-dev.dtb
+ 
+-dtb-$(CONFIG_ARCH_R9A07G054) += r9a07g054l2-smarc-gnk.dtb
+-dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044l2-smarc-gnk.dtb
++#dtb-$(CONFIG_ARCH_R9A07G054) += r9a07g054l2-smarc-gnk.dtb
++#dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044l2-smarc-gnk.dtb
+ dtb-$(CONFIG_ARCH_R9A07G054) += r9a07g054l2-dev.dtb
+ dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044l2-apollo.dtb
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+index 2f173eb90687..8bc04493e5ea 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -108,10 +108,6 @@ &dsi0 {
+ 	status = "okay";
+ };
+ 
+-&mipi_panel {
+-	status = "okay";
+-};
+-
+ &csi2 {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index b404e8e57735..d08e82136b53 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -437,17 +437,11 @@ dsi0_out: endpoint {
+ 			};
+ 		};
+ 	};
+-
+-	mipi_panel: mipi_panel {
+-		compatible = "evervision,vgg804834-otslwc";
++	/* for ep9593 dsi_to_hdmi bridge */
++	panel_dsi_fake: panel_dsi_fake {
++		status = "okay";
++		compatible = "fake,fake_dsi_panel";
+ 		reg = <0>;
+-		reset-gpios = <&pinctrl RZG2L_GPIO(46, 0) GPIO_ACTIVE_LOW>;
+-		dsi-lanes = <2>;
+-		backlight = <&pwm_backlight>;
+-		status = "disabled";
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+ 		port {
+ 			panel_in: endpoint {
+ 				remote-endpoint = <&dsi0_out>;
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 70f7935ddb5e..70aec00682f0 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -4539,6 +4539,19 @@ static const struct drm_display_mode osd101t2045_53ts_mode = {
+ 	.flags = DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC,
+ };
+ 
++static const struct drm_display_mode fake_dsi_mode = {
++	.clock = 49000,
++	.hdisplay = 1024,
++	.hsync_start = 1024 + 5,
++	.hsync_end = 1024 + 5 + 13,
++	.htotal = 1024 + 5 + 13 + 270,
++	.vdisplay = 600,
++	.vsync_start = 600 + 2,
++	.vsync_end = 600 + 2 + 3,
++	.vtotal = 600 + 2 + 3 + 17,
++	.flags = DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC,
++};
++
+ static const struct panel_desc_dsi osd101t2045_53ts = {
+ 	.desc = {
+ 		.modes = &osd101t2045_53ts_mode,
+@@ -4557,6 +4570,24 @@ static const struct panel_desc_dsi osd101t2045_53ts = {
+ 	.lanes = 4,
+ };
+ 
++static const struct panel_desc_dsi fake_dsi_panel = {
++	.desc = {
++		.modes = &fake_dsi_mode,
++		.num_modes = 1,
++		.bpc = 8,
++		.size = {
++			.width = 0,
++			.height = 0,
++		},
++		.connector_type = DRM_MODE_CONNECTOR_DSI,
++	},
++	.flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
++		 MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
++		 MIPI_DSI_MODE_EOT_PACKET,
++	.format = MIPI_DSI_FMT_RGB888,
++	.lanes = 2,
++};
++
+ static const struct of_device_id dsi_of_match[] = {
+ 	{
+ 		.compatible = "auo,b080uan01",
+@@ -4579,6 +4610,9 @@ static const struct of_device_id dsi_of_match[] = {
+ 	}, {
+ 		.compatible = "osddisplays,osd101t2045-53ts",
+ 		.data = &osd101t2045_53ts
++	}, {
++		.compatible = "fake,fake_dsi_panel",
++		.data = &fake_dsi_panel
+ 	}, {
+ 		/* sentinel */
+ 	}
+diff --git a/drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c b/drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c
+index 2329c51bbbc1..baefe048a7bb 100644
+--- a/drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c
++++ b/drivers/gpu/drm/rcar-du/rzg2l_mipi_dsi.c
+@@ -314,7 +314,7 @@ static void rzg2l_mipi_dsi_set_display_timing(struct rzg2l_mipi_dsi *mipi_dsi)
+ 	if (mipi_dsi->mode_flags & MIPI_DSI_MODE_VIDEO_BURST)
+ 		vich1ppsetr &= ~VICH1PPSETR_TXESYNC_PULSE;
+ 
+-	vich1ppsetr |= VICH1PPSETR_VC(0);
++	vich1ppsetr |= VICH1PPSETR_VC(1);
+ 	rzg2l_mipi_dsi_write(mipi_dsi->link_mmio, VICH1PPSETR, vich1ppsetr);
+ 
+ 	/* Configuration for Video Parameters */
+-- 
+2.34.1
+

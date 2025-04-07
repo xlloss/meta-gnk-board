@@ -1,0 +1,213 @@
+From e7f60abb5fbe76aeed4c4efac7c78c381629fbd6 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Tue, 1 Apr 2025 14:28:54 +0800
+Subject: [PATCH 46/50] [DTS] new dts files depend panel i/f type
+
+---
+ arch/arm64/boot/dts/renesas/Makefile          |  4 +-
+ arch/arm64/boot/dts/renesas/apollo_hdmi.dts   | 42 +++++++++++++
+ .../arm64/boot/dts/renesas/apollo_lvds_10.dts | 62 +++++++++++++++++++
+ .../arm64/boot/dts/renesas/apollo_lvds_65.dts | 61 ++++++++++++++++++
+ 4 files changed, 168 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/renesas/apollo_hdmi.dts
+ create mode 100644 arch/arm64/boot/dts/renesas/apollo_lvds_10.dts
+ create mode 100644 arch/arm64/boot/dts/renesas/apollo_lvds_65.dts
+
+diff --git a/arch/arm64/boot/dts/renesas/Makefile b/arch/arm64/boot/dts/renesas/Makefile
+index a1f77daf90d5..a07e446ccb66 100644
+--- a/arch/arm64/boot/dts/renesas/Makefile
++++ b/arch/arm64/boot/dts/renesas/Makefile
+@@ -93,4 +93,6 @@ dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044l2-dev.dtb
+ #dtb-$(CONFIG_ARCH_R9A07G054) += r9a07g054l2-smarc-gnk.dtb
+ #dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044l2-smarc-gnk.dtb
+ dtb-$(CONFIG_ARCH_R9A07G054) += r9a07g054l2-dev.dtb
+-dtb-$(CONFIG_ARCH_R9A07G044) += r9a07g044l2-apollo.dtb
++dtb-$(CONFIG_ARCH_R9A07G044) += apollo_lvds_65.dtb
++dtb-$(CONFIG_ARCH_R9A07G044) += apollo_lvds_10.dtb
++dtb-$(CONFIG_ARCH_R9A07G044) += apollo_hdmi.dtb
+diff --git a/arch/arm64/boot/dts/renesas/apollo_hdmi.dts b/arch/arm64/boot/dts/renesas/apollo_hdmi.dts
+new file mode 100644
+index 000000000000..f4f235dd3f9d
+--- /dev/null
++++ b/arch/arm64/boot/dts/renesas/apollo_hdmi.dts
+@@ -0,0 +1,42 @@
++// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++/*
++ * Device Tree Source for the RZ/G2L Apollo board
++ *
++ * Copyright (C) 2024 Regulus Corp.
++ */
++
++/dts-v1/;
++#include "r9a07g044l2-apollo.dtsi"
++
++/ {
++	model = "Renesas Apollo Board hdmi";
++	compatible = "renesas,apollo", "renesas,r9a07g044l2", "renesas,r9a07g044";
++};
++
++&dsi0 {
++	status = "okay";
++};
++
++&panel_dsi_fake {
++	status = "okay";
++
++	panel-timing {
++		clock-frequency = <49000000>;
++		hactive = <1024>;
++		vactive = <600>;
++
++		hsync-len = <13>;
++		hfront-porch = <5>;
++		hback-porch = <270>;
++
++		vsync-len = <3>;
++		vfront-porch = <2>;
++		vback-porch = <17>;
++
++		hsync-active = <1>;
++		vsync-active = <1>;
++		de-active = <1>;
++		pixelclk-active = <1>;
++		syncclk-active = <1>;
++	};
++};
+diff --git a/arch/arm64/boot/dts/renesas/apollo_lvds_10.dts b/arch/arm64/boot/dts/renesas/apollo_lvds_10.dts
+new file mode 100644
+index 000000000000..1317912859c2
+--- /dev/null
++++ b/arch/arm64/boot/dts/renesas/apollo_lvds_10.dts
+@@ -0,0 +1,62 @@
++// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++/*
++ * Device Tree Source for the RZ/G2L Apollo board
++ *
++ * Copyright (C) 2024 Regulus Corp.
++ */
++
++/dts-v1/;
++#include "r9a07g044l2-apollo.dtsi"
++
++/ {
++	model = "Renesas Apollo Board LVDS 10.0 inch";
++	compatible = "renesas,apollo", "renesas,r9a07g044l2", "renesas,r9a07g044";
++
++	panel_rgb: panel_rgb {
++		status = "okay";
++		compatible = "panel-dpi";
++		backlight = <&pwm_backlight>;
++		enable-gpios = <&pinctrl RZG2L_GPIO(47, 2) GPIO_ACTIVE_LOW>;
++		power-supply = <&vdd_panel_3v3>;
++		/* panel-timing is used for "panel-dpi" compatible */
++		panel-timing {
++			clock-frequency = <70000000>;
++			hactive = <1024>;
++			vactive = <768>;
++
++			hsync-len = <136>;
++			hfront-porch = <24>;
++			hback-porch = <160>;
++
++			vsync-len = <6>;
++			vfront-porch = <3>;
++			vback-porch = <29>;
++
++			hsync-active = <1>;
++			vsync-active = <1>;
++			de-active = <1>;
++			pixelclk-active = <1>;
++		};
++
++		port {
++			panel_in_rgb: endpoint {
++				remote-endpoint = <&du_out_rgb>;
++			};
++		};
++	};
++};
++
++&du {
++	pinctrl-0 = <&du_pins>;
++	pinctrl-names = "default";
++
++	status = "okay";
++
++	ports {
++		port@0 {
++			du_out_rgb: endpoint {
++				remote-endpoint = <&panel_in_rgb>;
++			};
++		};
++	};
++};
+diff --git a/arch/arm64/boot/dts/renesas/apollo_lvds_65.dts b/arch/arm64/boot/dts/renesas/apollo_lvds_65.dts
+new file mode 100644
+index 000000000000..24e7927f69a8
+--- /dev/null
++++ b/arch/arm64/boot/dts/renesas/apollo_lvds_65.dts
+@@ -0,0 +1,61 @@
++// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++/*
++ * Device Tree Source for the RZ/G2L Apollo board
++ *
++ * Copyright (C) 2024 Regulus Corp.
++ */
++
++/dts-v1/;
++#include "r9a07g044l2-apollo.dtsi"
++
++/ {
++	model = "Renesas Apollo Board LVDS 6.5 inch";
++	compatible = "renesas,apollo", "renesas,r9a07g044l2", "renesas,r9a07g044";
++
++	panel_rgb: panel_rgb {
++		status = "okay";
++		compatible = "panel-dpi";
++		backlight = <&pwm_backlight>;
++		enable-gpios = <&pinctrl RZG2L_GPIO(47, 2) GPIO_ACTIVE_LOW>;
++		power-supply = <&vdd_panel_3v3>;
++		/* panel-timing is used for "panel-dpi" compatible */
++		panel-timing {
++			clock-frequency = <25200000>;
++			hactive = <640>;
++			vactive = <480>;
++
++			hsync-len = <96>;
++			hfront-porch = <16>;
++			hback-porch = <48>;
++
++			vsync-len = <2>;
++			vfront-porch = <10>;
++			vback-porch = <33>;
++
++			hsync-active = <1>;
++			vsync-active = <1>;
++			de-active = <1>;
++			pixelclk-active = <1>;
++		};
++		port {
++			panel_in_rgb: endpoint {
++				remote-endpoint = <&du_out_rgb>;
++			};
++		};
++	};
++};
++
++&du {
++	pinctrl-0 = <&du_pins>;
++	pinctrl-names = "default";
++
++	status = "okay";
++
++	ports {
++		port@0 {
++			du_out_rgb: endpoint {
++				remote-endpoint = <&panel_in_rgb>;
++			};
++		};
++	};
++};
+-- 
+2.34.1
+

@@ -1,0 +1,230 @@
+From 103332ef43662c729eaae73976f5903f84631db6 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Tue, 1 Apr 2025 14:18:39 +0800
+Subject: [PATCH 45/50] [DTS] rename r9a07g044l2-apollo.dts to
+ r9a07g044l2-apollo.dtsi
+
+---
+ .../boot/dts/renesas/r9a07g044l2-apollo.dts   | 136 ------------------
+ .../boot/dts/renesas/r9a07g044l2-apollo.dtsi  |  66 +++++++++
+ 2 files changed, 66 insertions(+), 136 deletions(-)
+ delete mode 100644 arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+ create mode 100644 arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dtsi
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+deleted file mode 100644
+index c112bb43c134..000000000000
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ /dev/null
+@@ -1,136 +0,0 @@
+-// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+-/*
+- * Device Tree Source for the RZ/G2L Apollo board
+- *
+- * Copyright (C) 2024 Regulus Corp.
+- */
+-
+-/dts-v1/;
+-#include "r9a07g044l2.dtsi"
+-#include "rzg2l-smarc-som.dtsi"
+-#include "rzg2l-apollo-pinfunction.dtsi"
+-#include "rz-gnk-smarc-common.dtsi"
+-
+-/*
+- * ENABLE_PANEL_640_480_1024_768 == 1 : 640  x 480
+- * ENABLE_PANEL_640_480_1024_768 == 0 : 1024 x 768
+- */
+-#define ENABLE_PANEL_640_480_1024_768 1
+-
+-/ {
+-	model = "Renesas Apollo Board based on GNK";
+-	compatible = "renesas,apollo", "renesas,r9a07g044l2", "renesas,r9a07g044";
+-
+-	vdd_panel_3v3: vdd_panel_3v3 {
+-		compatible = "regulator-fixed";
+-		regulator-name = "lcd-3v3";
+-		regulator-min-microvolt = <3300000>;
+-		regulator-max-microvolt = <3300000>;
+-	};
+-
+-	panel_rgb: panel_rgb {
+-		status = "disabled";
+-		compatible = "panel-dpi";
+-		backlight = <&pwm_backlight>;
+-		enable-gpios = <&pinctrl RZG2L_GPIO(47, 2) GPIO_ACTIVE_LOW>;
+-		power-supply = <&vdd_panel_3v3>;
+-		/* panel-timing is used for "panel-dpi" compatible */
+-		#if ENABLE_PANEL_640_480_1024_768
+-		panel-timing {
+-			clock-frequency = <25200000>;
+-			hactive = <640>;
+-			vactive = <480>;
+-
+-			hsync-len = <96>;
+-			hfront-porch = <16>;
+-			hback-porch = <48>;
+-
+-			vsync-len = <2>;
+-			vfront-porch = <10>;
+-			vback-porch = <33>;
+-
+-			hsync-active = <1>;
+-			vsync-active = <1>;
+-			de-active = <1>;
+-			pixelclk-active = <1>;
+-		};
+-		#else
+-		panel-timing {
+-			clock-frequency = <70000000>;
+-			hactive = <1024>;
+-			vactive = <768>;
+-
+-			hsync-len = <136>;
+-			hfront-porch = <24>;
+-			hback-porch = <160>;
+-
+-			vsync-len = <6>;
+-			vfront-porch = <3>;
+-			vback-porch = <29>;
+-
+-			hsync-active = <1>;
+-			vsync-active = <1>;
+-			de-active = <1>;
+-			pixelclk-active = <1>;
+-		};
+-		#endif
+-		port {
+-			panel_in_rgb: endpoint {
+-				remote-endpoint = <&du_out_rgb>;
+-			};
+-		};
+-	};
+-};
+-
+-&i2c_gpio {
+-	status = "disabled";
+-};
+-
+-&canfd {
+-	channel0 {
+-		status = "disabled";
+-	};
+-};
+-
+-&scif1 {
+-	status = "disabled";
+-};
+-
+-&gpt4 {
+-	status = "disabled";
+-};
+-
+-&pwm_backlight {
+-	status = "okay";
+-};
+-
+-&dsi0 {
+-	status = "okay";
+-};
+-
+-&csi2 {
+-	status = "okay";
+-};
+-
+-&ov5645 {
+-	status = "okay";
+-};
+-
+-&i2c0 {
+-	status = "okay";
+-};
+-
+-&du {
+-	pinctrl-0 = <&du_pins>;
+-	pinctrl-names = "default";
+-
+-	status = "okay";
+-
+-	ports {
+-		port@0 {
+-			du_out_rgb: endpoint {
+-				remote-endpoint = <&panel_in_rgb>;
+-			};
+-		};
+-	};
+-};
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dtsi b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dtsi
+new file mode 100644
+index 000000000000..34c733b38494
+--- /dev/null
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dtsi
+@@ -0,0 +1,66 @@
++// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++/*
++ * Device Tree Source for the RZ/G2L Apollo board
++ *
++ * Copyright (C) 2024 Regulus Corp.
++ */
++
++/dts-v1/;
++#include "r9a07g044l2.dtsi"
++#include "rzg2l-smarc-som.dtsi"
++#include "rzg2l-apollo-pinfunction.dtsi"
++#include "rz-gnk-smarc-common.dtsi"
++
++/ {
++	model = "Renesas Apollo Board based on GNK";
++	compatible = "renesas,apollo", "renesas,r9a07g044l2", "renesas,r9a07g044";
++
++	vdd_panel_3v3: vdd_panel_3v3 {
++		compatible = "regulator-fixed";
++		regulator-name = "lcd-3v3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++	};
++};
++
++&i2c_gpio {
++	status = "disabled";
++};
++
++&canfd {
++	channel0 {
++		status = "disabled";
++	};
++};
++
++&scif1 {
++	status = "disabled";
++};
++
++&gpt4 {
++	status = "disabled";
++};
++
++&pwm_backlight {
++	status = "okay";
++};
++
++&dsi0 {
++	status = "disabled";
++};
++
++&csi2 {
++	status = "okay";
++};
++
++&ov5645 {
++	status = "okay";
++};
++
++&i2c0 {
++	status = "okay";
++};
++
++&du {
++	status = "okay";
++};
+-- 
+2.34.1
+

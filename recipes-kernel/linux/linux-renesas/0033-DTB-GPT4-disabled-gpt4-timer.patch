@@ -1,0 +1,25 @@
+From 13ac1d19edcaa70a4bc8f8e890a3aaad3f0c1f60 Mon Sep 17 00:00:00 2001
+From: slash <slash.linux.c@gmail.com>
+Date: Fri, 14 Mar 2025 19:10:44 +0800
+Subject: [PATCH 33/50] [DTB|GPT4] disabled gpt4 timer
+
+---
+ arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+index 1db3e5f14854..2f173eb90687 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
++++ b/arch/arm64/boot/dts/renesas/r9a07g044l2-apollo.dts
+@@ -97,7 +97,7 @@ &scif1 {
+ };
+ 
+ &gpt4 {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &pwm_backlight {
+-- 
+2.34.1
+
