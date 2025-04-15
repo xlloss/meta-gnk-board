@@ -6,6 +6,7 @@ SRC_URI_append = " \
 	file://ts_vgg804834_0tslwc.cfg \
 	file://mipidis_panel_vgg804834_otslwc.cfg \
 	file://isl76683.cfg \
+	file://drm_panel_simple.cfg \
 	file://0001-gnk-v2l-g2l-new-r9a07g054l2-smarc-gnk.dts-r9a07g044l.patch \
 	file://0003-gnk-v2l-g2l-audio-enable-DA7218-audio-codec.patch \
 	file://0004-gnk-v2l-g2l-audio-workaround-for-DA7218-not-support-.patch \
