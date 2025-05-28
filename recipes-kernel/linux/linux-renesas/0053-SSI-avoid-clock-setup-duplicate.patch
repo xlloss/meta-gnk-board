@@ -1,0 +1,26 @@
+From f8c430f569c977ffa39b1cf63b84269c2d1b1c83 Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Tue, 13 Feb 2024 07:36:08 +0800
+Subject: [PATCH 3/6] [SSI] avoid clock setup duplicate
+
+---
+ sound/soc/sh/rz-ssi.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/sound/soc/sh/rz-ssi.c b/sound/soc/sh/rz-ssi.c
+index 774c284199bb..2a3e14997d01 100644
+--- a/sound/soc/sh/rz-ssi.c
++++ b/sound/soc/sh/rz-ssi.c
+@@ -858,6 +858,9 @@ static int rz_ssi_dai_hw_params(struct snd_pcm_substream *substream,
+ 		return -EINVAL;
+ 	}
+ 
++	if (ssi->playback.running || ssi->capture.running)
++		return 0;
++
+ 	return rz_ssi_clk_setup(ssi, params_rate(params),
+ 				params_channels(params));
+ }
+-- 
+2.25.1
+

@@ -90,6 +90,11 @@ SRC_URI_append = " \
 	file://0048-DPI-add-6bit-8bit-select-function-for-panel.patch \
 	file://0049-DTS-DPI-6.5_INCH-set-6bit-for-6.5-inch-panel.patch \
 	file://0050-DTS-CAMERA-add-enable-and-reset-pin.patch \
+	file://0051-SSI-active-reset-fifo.patch \
+	file://0052-SSI-avoid-reset-again-when-playback-or-record-re-tri.patch \
+	file://0053-SSI-avoid-clock-setup-duplicate.patch \
+	file://0054-SSI-write-SSICR_TEN-SSICR_REN-at-sametime.patch \
+	file://0055-AUDIO-CMEDIA-change-CM7104-record-sample-rate-48K.patch \
 "
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"

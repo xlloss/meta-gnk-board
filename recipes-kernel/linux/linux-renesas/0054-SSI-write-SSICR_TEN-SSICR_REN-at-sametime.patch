@@ -1,0 +1,38 @@
+From 8e8ad9f990dc30147208e263019f297c0a1c3c6e Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Tue, 13 Feb 2024 07:40:16 +0800
+Subject: [PATCH 4/6] [SSI] write SSICR_TEN, SSICR_REN at sametime
+
+      this patch for playback and record at sametime
+      check 27.6.1.5 Write Access Restriction (a) TEN Bit and REN Bit
+---
+ sound/soc/sh/rz-ssi.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/sound/soc/sh/rz-ssi.c b/sound/soc/sh/rz-ssi.c
+index 2a3e14997d01..af2a655bd08b 100644
+--- a/sound/soc/sh/rz-ssi.c
++++ b/sound/soc/sh/rz-ssi.c
+@@ -354,8 +354,17 @@ static int rz_ssi_start(struct rz_ssi_priv *ssi, struct rz_ssi_stream *strm)
+ 			      SSISR_RUIRQ), 0);
+ 
+ 	strm->running = 1;
+-	ssicr |= is_play ? SSICR_TEN : SSICR_REN;
+-	rz_ssi_reg_writel(ssi, SSICR, ssicr);
++	/*
++	 * 27.6.1.5  Write Access Restriction
++	 *
++	 * (a) TEN Bit and REN Bit
++	 *     Set 1 at the same time when you use SSIF-2 as
++	 *     transmission and reception.
++	 */
++	if (is_play) {
++		ssicr |= (SSICR_TEN | SSICR_REN);
++		rz_ssi_reg_writel(ssi, SSICR, ssicr);
++	}
+ 
+ 	return 0;
+ }
+-- 
+2.25.1
+

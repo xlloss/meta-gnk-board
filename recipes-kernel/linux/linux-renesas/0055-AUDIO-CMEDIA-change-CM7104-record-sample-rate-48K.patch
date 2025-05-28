@@ -1,0 +1,29 @@
+From 4fa5f78883722b18cc7753e6b81eb0ff588860e2 Mon Sep 17 00:00:00 2001
+From: "Slash.Huang" <slash.linux.c@gmail.com>
+Date: Tue, 20 May 2025 23:36:57 +0800
+Subject: [PATCH 6/6] [AUDIO|CMEDIA] change CM7104 record sample rate 48K
+
+---
+ sound/soc/codecs/cm7104_48k.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/sound/soc/codecs/cm7104_48k.c b/sound/soc/codecs/cm7104_48k.c
+index e7d30d01cb72..6b66877d255c 100644
+--- a/sound/soc/codecs/cm7104_48k.c
++++ b/sound/soc/codecs/cm7104_48k.c
+@@ -105,9 +105,9 @@ static struct snd_soc_dai_driver cm7104_dai_driver = {
+ 			| SNDRV_PCM_FMTBIT_S24_LE
+ 			| SNDRV_PCM_FMTBIT_S16_LE,
+ 
+-		.rates		= SNDRV_PCM_RATE_16000,
+-		.rate_min	= 16000,
+-		.rate_max	= 16000,
++		.rates		= SNDRV_PCM_RATE_48000,
++		.rate_min	= 48000,
++		.rate_max	= 48000,
+ 	},
+ 
+ 	.ops    = &cm7104_dai_ops,
+-- 
+2.25.1
+

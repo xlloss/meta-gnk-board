@@ -1,0 +1,49 @@
+From 6eca7f0a156fef6582dd090ef8e51ae72ea81203 Mon Sep 17 00:00:00 2001
+From: slash <slash@gmail.com>
+Date: Tue, 13 Feb 2024 07:29:47 +0800
+Subject: [PATCH 2/6] [SSI] avoid reset again when playback or record
+ re-trigger
+
+---
+ sound/soc/sh/rz-ssi.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/sound/soc/sh/rz-ssi.c b/sound/soc/sh/rz-ssi.c
+index c3c68e3007bd..774c284199bb 100644
+--- a/sound/soc/sh/rz-ssi.c
++++ b/sound/soc/sh/rz-ssi.c
+@@ -727,6 +727,16 @@ static int rz_ssi_dma_request(struct rz_ssi_priv *ssi, struct device *dev)
+ 	return -ENODEV;
+ }
+ 
++void rz_ssi_software_reset(struct rz_ssi_priv *ssi)
++{
++	if ((ssi->playback.running == 0) && (ssi->capture.running == 0)) {
++		/* Soft Reset */
++		rz_ssi_reg_mask_setl(ssi, SSIFCR, 0, SSIFCR_SSIRST);
++		rz_ssi_reg_mask_setl(ssi, SSIFCR, SSIFCR_SSIRST, 0);
++		udelay(5);
++	}
++}
++
+ static int rz_ssi_dai_trigger(struct snd_pcm_substream *substream, int cmd,
+ 			      struct snd_soc_dai *dai)
+ {
+@@ -736,13 +746,10 @@ static int rz_ssi_dai_trigger(struct snd_pcm_substream *substream, int cmd,
+ 
+ 	switch (cmd) {
+ 	case SNDRV_PCM_TRIGGER_START:
+-		/* Soft Reset */
+-		rz_ssi_reg_mask_setl(ssi, SSIFCR, 0, SSIFCR_SSIRST);
+-		rz_ssi_reg_mask_setl(ssi, SSIFCR, SSIFCR_SSIRST, 0);
+-		udelay(5);
+ 
+ 		rz_ssi_stream_init(strm, substream);
+ 
++		rz_ssi_software_reset(ssi);
+ 		if (ssi->dma_rt) {
+ 			bool is_playback;
+ 
+-- 
+2.25.1
+
