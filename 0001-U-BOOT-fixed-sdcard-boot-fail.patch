@@ -1,0 +1,36 @@
+From 33fb0b53183680b56614bc0b0037000748d6b954 Mon Sep 17 00:00:00 2001
+From: "slash.huang" <slash.linux.c@gmail.com>
+Date: Wed, 5 Nov 2025 18:27:34 +0800
+Subject: [PATCH] [U-BOOT] fixed sdcard boot fail
+
+---
+ include/configs/rzg2l-apollo.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/include/configs/rzg2l-apollo.h b/include/configs/rzg2l-apollo.h
+index e424c3f9..0c26ab02 100644
+--- a/include/configs/rzg2l-apollo.h
++++ b/include/configs/rzg2l-apollo.h
+@@ -60,6 +60,8 @@
+ /* ENV setting */
+ 
+ #define CONFIG_EXTRA_ENV_SETTINGS \
++	"chk_sdboot_image=if test -e mmc 1:1 /boot/Image; then setenv sdcard_boot_image 1; else setenv sdcard_boot_image 0; fi; \0" \
++	"chk_sdboot_dtb=if test -e mmc 1:1 /boot/${panel_type}; then setenv sdcard_boot_dtb 1; else setenv sdcard_boot_dtb 0; fi; \0" \
+ 	"set_lvds_type_65=setenv LVDS_TYPE 65 \0" \
+ 	"set_lvds_type_10=setenv LVDS_TYPE 10 \0" \
+ 	"chk_lvds_panel=if gpio input 99; then run set_lvds_type_65; else run set_lvds_type_10; fi \0" \
+@@ -71,7 +73,9 @@
+ 	"bootimage=booti 0x48080000 - 0x48000000 \0" \
+ 	"emmcload=ext4load mmc 0:1 0x48080000 boot/Image;ext4load mmc 0:1 0x48000000 boot/${panel_type};run prodemmcbootargs \0" \
+ 	"sd1load=ext4load mmc 1:1 0x48080000 boot/Image;ext4load mmc 1:1 0x48000000 boot/${panel_type};run prodsdbootargs \0" \
+-	"bootcmd_check=run chk_panel_dtb; if mmc dev 1; then run sd1load; else run emmcload; fi \0"
++	"bootcmd_check=env default -a; run chk_panel_dtb; if mmc dev 1; then run chk_sdboot_image; run chk_sdboot_dtb; \
++	if test $sdcard_boot_image -eq 1 -a $sdcard_boot_dtb -eq 1; then run mmc dev 1; mmc info; run sd1load; \
++	else mmc dev 0; mmc info; run emmcload;fi; else mmc dev 0; mmc info; run emmcload; fi \0"
+ 
+ #define CONFIG_BOOTCOMMAND	"env default -a;run bootcmd_check;run bootimage"
+ 
+-- 
+2.25.1
+

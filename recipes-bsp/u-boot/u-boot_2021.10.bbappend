@@ -6,5 +6,6 @@ SRC_URI += "file://0001-support-gnk-board-dts.patch \
 	file://0001-SDHC-CH1-fixed-sdcard-read-fail.patch \
 	file://0001-LOW_LEVEL_CONG-add-panel-check-script-on-boot.patch \
 	file://0001-LOW_LEVEL_CONG-add-panel-check-script-for-eMMC-boot.patch \
+	file://0001-U-BOOT-fixed-sdcard-boot-fail.patch \
 	"
 
