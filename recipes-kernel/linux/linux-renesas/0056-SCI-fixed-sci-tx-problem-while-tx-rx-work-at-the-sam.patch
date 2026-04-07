@@ -1,0 +1,49 @@
+From 292c3b5d212750a8ac7a4d839239621c1cddd002 Mon Sep 17 00:00:00 2001
+From: "slash.huang" <slash.linux.c@gmail.com>
+Date: Wed, 14 Jan 2026 17:07:31 +0800
+Subject: [PATCH 1/2] [SCI] fixed sci tx problem while tx/rx work at the same
+ time
+
+---
+ drivers/tty/serial/sh-sci.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index e9c1fb17166b..8957c1ec5d62 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -616,10 +616,12 @@ static void sci_start_tx(struct uart_port *port)
+ 		 * (transmit interrupt enable) or in the same instruction to
+ 		 * start the transmitting process.
+ 		 */
+-		if (s->is_rz_sci)
++		ctrl |= SCSCR_TIE;
++		serial_port_out(port, SCSCR, ctrl);
++		if (s->is_rz_sci) {
+ 			ctrl |= SCSCR_TE;
+-
+-		serial_port_out(port, SCSCR, ctrl | SCSCR_TIE);
++			serial_port_out(port, SCSCR, ctrl);
++		}
+ 	}
+ }
+ 
+@@ -627,13 +629,14 @@ static void sci_stop_tx(struct uart_port *port)
+ {
+ 	unsigned short ctrl;
+ 
++	(port->type == PORT_SCI) ? udelay(200) : PORT_SCI;
+ 	/* Clear TIE (Transmit Interrupt Enable) bit in SCSCR */
+ 	ctrl = serial_port_in(port, SCSCR);
+ 
+ 	if (port->type == PORT_SCIFA || port->type == PORT_SCIFB)
+ 		ctrl &= ~SCSCR_TDRQE;
+ 
+-	ctrl &= ~SCSCR_TIE;
++	(port->type == PORT_SCI) ? (ctrl &= ~SCSCR_TE) : (ctrl &= ~SCSCR_TIE);
+ 
+ 	serial_port_out(port, SCSCR, ctrl);
+ 
+-- 
+2.25.1
+

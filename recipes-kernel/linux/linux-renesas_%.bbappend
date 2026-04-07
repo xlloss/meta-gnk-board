@@ -95,6 +95,9 @@ SRC_URI_append = " \
 	file://0053-SSI-avoid-clock-setup-duplicate.patch \
 	file://0054-SSI-write-SSICR_TEN-SSICR_REN-at-sametime.patch \
 	file://0055-AUDIO-CMEDIA-change-CM7104-record-sample-rate-48K.patch \
+	file://0056-SCI-fixed-sci-tx-problem-while-tx-rx-work-at-the-sam.patch \
+	file://0057-SCI-enable-sci-port0.patch \
+	file://0058-SPI-enable-spi1-dev-driver.patch \
 "
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"

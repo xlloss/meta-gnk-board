@@ -1,0 +1,25 @@
+From 19c3c5805eec92cecf28b5c4e9d64fbb816e2aee Mon Sep 17 00:00:00 2001
+From: "slash.huang" <slash.linux.c@gmail.com>
+Date: Wed, 4 Mar 2026 17:04:36 +0800
+Subject: [PATCH] [SPI] enable spi1 dev driver
+
+---
+ arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index 1b76d6b9eefa..2dd842d15086 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -523,7 +523,7 @@ phy1: ethernet-phy@7 {
+ 
+ /* PMOD 0 */
+ &spi1 {
+-	status = "disabled";
++	status = "okay";
+ 	spidev0: spi@0 {
+ 		compatible = "rohm,dh2228fv";
+ 		reg = <0>;
+-- 
+2.25.1
+
