@@ -98,6 +98,7 @@ SRC_URI_append = " \
 	file://0056-SCI-fixed-sci-tx-problem-while-tx-rx-work-at-the-sam.patch \
 	file://0057-SCI-enable-sci-port0.patch \
 	file://0058-SPI-enable-spi1-dev-driver.patch \
+	file://0059-SCIF-enable-scif3.patch \
 "
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"
