@@ -100,6 +100,10 @@ SRC_URI_append = " \
 	file://0058-SPI-enable-spi1-dev-driver.patch \
 	file://0059-SCIF-enable-scif3.patch \
 	file://0060-GPIO-remove-gpio-hug-for-pin_27_0-and-pin_33_0.patch \
+	file://0061-ravb-Fix-NETDEV-WATCHDOG-eth1-ravb-transmit-queue-0-.patch \
+	file://0062-ravb-Fix-use-after-free-issue-in-ravb_tx_timeout_wor.patch \
+	file://0063-ravb-Fix-races-between-ravb_tx_timeout_work-and-net-.patch \
+	file://0064-ETH0-ETH1-avoid-externel-P28_1-ET0_LINKSTA-to-check-.patch \
 "
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"

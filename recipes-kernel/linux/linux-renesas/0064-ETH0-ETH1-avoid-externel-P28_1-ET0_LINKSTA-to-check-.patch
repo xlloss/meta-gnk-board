@@ -1,0 +1,36 @@
+From 016df1dd61734fc06bda98b220af074a6f97c1be Mon Sep 17 00:00:00 2001
+From: "slash.huang" <slash.linux.c@gmail.com>
+Date: Sun, 27 Sep 2026 18:23:28 +0800
+Subject: [PATCH] [ETH0|ETH1] avoid externel P28_1/ET0_LINKSTA to check link
+ status
+
+1. rzg2l soc P28_1/ET0_LINKSTA of evk/custom's board no connect direct to KSZ9131RNXC
+
+2. so, link status managed by phy, not externel pin (P28_1/ET0_LINKSTA)
+---
+ arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+index 2dd842d15086..743ef583ff60 100644
+--- a/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rz-gnk-smarc-common.dtsi
+@@ -468,6 +468,7 @@ &eth0 {
+ 	pinctrl-names = "default";
+ 	phy-handle = <&phy0>;
+ 	phy-mode = "rgmii-id";
++	renesas,no-ether-link;
+ 	status = "okay";
+ 
+ 	phy0: ethernet-phy@7 {
+@@ -497,6 +498,7 @@ &eth1 {
+ 	pinctrl-names = "default";
+ 	phy-handle = <&phy1>;
+ 	phy-mode = "rgmii-id";
++	renesas,no-ether-link;
+ 	status = "okay";
+ 
+ 	phy1: ethernet-phy@7 {
+-- 
+2.25.1
+

@@ -1,0 +1,73 @@
+From 2c5d7200d4d728f1a963b2bf7f989f81afa9e01f Mon Sep 17 00:00:00 2001
+From: Hien Huynh <hien.huynh.px@renesas.com>
+Date: Thu, 27 Apr 2023 08:50:01 +0700
+Subject: [PATCH 1/4] ravb: Fix NETDEV WATCHDOG: eth1 (ravb): transmit queue 0
+ timed out
+
+This commit enables bit ECSIPR.ECSIPR_LCHNGIP.
+
+Without it, RAVB driver will disable both TX and RX in
+ravb_emac_interrupt_unlocked() when ECSR.ECSR_ICD, which indicates
+an invalid carrier was detected in the PHY chip, is set.
+
+Few minutes later, a warning message will be generated as below:
+
+  [   95.971947] ------------[ cut here ]------------
+  [   95.971968] NETDEV WATCHDOG: eth1 (ravb): transmit queue 0 timed out
+  [   95.972051] WARNING: CPU: 1 PID: 295 at net/sched/sch_generic.c:468 dev_watchdog+0x314/0x320
+  [   95.972085] Modules linked in: uvcvideo vspm_if(O) vspm(O) uvcs_drv(O) mmngrbuf(O) mmngr(O) mali_kbase(O)
+  [   95.972120] CPU: 1 PID: 295 Comm: iperf Tainted: G           O      5.10.83-cip1-rt1-yocto-standard #1
+  [   95.972129] Hardware name: Renesas SMARC EVK based on r9a07g044l2 (DT)
+  [   95.972135] pstate: 40400005 (nZcv daif +PAN -UAO -TCO BTYPE=--)
+  [   95.972142] pc : dev_watchdog+0x314/0x320
+  [   95.972149] lr : dev_watchdog+0x314/0x320
+  [   95.972156] sp : ffff800011093db0
+  [   95.972158] x29: ffff800011093db0 x28: ffff00000a435dc0
+  [   95.972167] x27: 0000000000000004 x26: 0000000000000140
+  [   95.972174] x25: ffff00000a3dd000 x24: 0000000000000001
+  [   95.972181] x23: ffff800010f27000 x22: ffff00000a3dd39c
+  [   95.972188] x21: ffff00000a3dcfb8 x20: ffff00000a3dd3b8
+  [   95.972195] x19: 0000000000000000 x18: 0000000000000000
+  [   95.972202] x17: 0000000000000000 x16: 0000000000000000
+  [   95.972208] x15: ffffffffffffffff x14: ffff800010c93a98
+  [   95.972215] x13: ffff80001102c104 x12: ffff80001102c0f7
+  [   95.972222] x11: ffff800011093d00 x10: ffff800010f47c58
+  [   95.972229] x9 : ffff800011093db0 x8 : 6f2064656d697420
+  [   95.972236] x7 : 3020657565757120 x6 : 00000000fffff166
+  [   95.972242] x5 : ffff00007fbfa8d8 x4 : 00000000fffff166
+  [   95.972249] x3 : 0000000000000001 x2 : ffff00007fbfa8e0
+  [   95.972256] x1 : d3e219972b031000 x0 : 0000000000000000
+  [   95.972264] Call trace:
+  [   95.972269]  dev_watchdog+0x314/0x320
+  [   95.972276]  call_timer_fn.isra.33+0x24/0x80
+  [   95.972290]  run_timer_softirq+0x37c/0x3b8
+  [   95.972296]  efi_header_end+0x124/0x288
+  [   95.972303]  irq_exit+0xe0/0xf0
+  [   95.972311]  __handle_domain_irq+0x68/0xc0
+  [   95.972321]  gic_handle_irq+0xc0/0x138
+  [   95.972334]  el0_irq_naked+0x4c/0x54
+  [   95.972343] ---[ end trace 4ca7cb5e98477975 ]---
+  [   96.972584] ravb 11c30000.ethernet eth1: transmit timed out, status 00000000, resetting...
+
+Signed-off-by: Loc Pham <loc.pham.xh@renesas.com>
+Signed-off-by: Hien Huynh <hien.huynh.px@renesas.com>
+---
+ drivers/net/ethernet/renesas/ravb_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index 76894c549da4..611d4f073685 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -535,7 +535,7 @@ static void ravb_emac_init_gbeth(struct net_device *ndev)
+ 	ravb_write(ndev, CSR0_TPE | CSR0_RPE, CSR0);
+ 
+ 	/* E-MAC interrupt enable register */
+-	ravb_write(ndev, ECSIPR_ICDIP, ECSIPR);
++	ravb_write(ndev, ECSIPR_ICDIP | ECSIPR_LCHNGIP, ECSIPR);
+ 
+ 	if (priv->phy_interface == PHY_INTERFACE_MODE_MII) {
+ 		ravb_modify(ndev, CXR31, CXR31_SEL_LINK0 | CXR31_SEL_LINK1, 0);
+-- 
+2.25.1
+
