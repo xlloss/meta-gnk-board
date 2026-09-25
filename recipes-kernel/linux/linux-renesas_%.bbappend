@@ -99,6 +99,7 @@ SRC_URI_append = " \
 	file://0057-SCI-enable-sci-port0.patch \
 	file://0058-SPI-enable-spi1-dev-driver.patch \
 	file://0059-SCIF-enable-scif3.patch \
+	file://0060-GPIO-remove-gpio-hug-for-pin_27_0-and-pin_33_0.patch \
 "
 
 COMPATIBLE_MACHINE_rzg2l = "(gnk-rzg2l)"

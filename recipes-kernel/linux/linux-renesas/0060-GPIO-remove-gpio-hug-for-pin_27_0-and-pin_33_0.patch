@@ -1,0 +1,42 @@
+From aeb2df4c09cd2f832fb91369d7ff19630426e831 Mon Sep 17 00:00:00 2001
+From: "slash.huang" <slash.linux.c@gmail.com>
+Date: Tue, 28 Apr 2026 18:58:29 +0800
+Subject: [PATCH] [GPIO] remove gpio-hug for pin_27_0 and pin_33_0
+
+---
+ .../boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi | 14 --------------
+ 1 file changed, 14 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+index 5fe7ad2d8097..91fa12251838 100644
+--- a/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzg2l-apollo-pinfunction.dtsi
+@@ -15,25 +15,11 @@ can0_pins: can0 {
+ 			 <RZG2L_PORT_PINMUX(39, 0, 3)>; /* RX */
+ 	};
+ 
+-	can0-stb-hog {
+-		gpio-hog;
+-		gpios = <RZG2L_GPIO(27, 0) GPIO_ACTIVE_HIGH>;
+-		output-low;
+-		line-name = "can0_stb";
+-	};
+-
+ 	can1_pins: can1 {
+ 		pinmux = <RZG2L_PORT_PINMUX(40, 0, 3)>, /* TX */
+ 			 <RZG2L_PORT_PINMUX(40, 1, 3)>; /* RX */
+ 	};
+ 
+-	can1-stb-hog {
+-		gpio-hog;
+-		gpios = <RZG2L_GPIO(33, 0) GPIO_ACTIVE_HIGH>;
+-		output-low;
+-		line-name = "can1_stb";
+-	};
+-
+ 	spi1_pins: spi1 {
+ 		pinmux = <RZG2L_PORT_PINMUX(44, 0, 1)>, /* CK */
+ 			 <RZG2L_PORT_PINMUX(44, 1, 1)>, /* MOSI */
+-- 
+2.25.1
+
