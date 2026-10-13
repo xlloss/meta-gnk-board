@@ -1,0 +1,53 @@
+From 787d8cc7180a43656425cbbfaddb99481b9a7c6d Mon Sep 17 00:00:00 2001
+From: "slash.huang" <slash.linux.c@gmail.com>
+Date: Tue, 13 Oct 2026 18:45:00 +0800
+Subject: [PATCH] [MMC] fixed eMMC swtch boot part too slow
+
+----------------------------------------------------------------------------
+                              ISSI IS21/22TF64G       Phison PTE4ABWN-64GI
+----------------------------------------------------------------------------
+
+PARTITION_SWITCH_TIME [199]       0x03 (3v3/1v8)         0xFF (1v8 only)
+----------------------------------------------------------------------------
+SWITCH 2 time                     300 ms * 2              2550 ms * 2
+
+use SDDAT0 to check bus busy or not
+---
+ drivers/mmc/sh_sdhi.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/drivers/mmc/sh_sdhi.c b/drivers/mmc/sh_sdhi.c
+index 3ea3f74c..6df6fb64 100644
+--- a/drivers/mmc/sh_sdhi.c
++++ b/drivers/mmc/sh_sdhi.c
+@@ -827,9 +827,27 @@ int sh_sdhi_dm_set_ios(struct udevice *dev)
+ 	return sh_sdhi_set_ios_common(host, mmc);
+ }
+ 
++static int sh_sdhi_dm_wait_dat0(struct udevice *dev, int state, int timeout_us)
++{
++	struct sh_sdhi_host *host = dev_get_priv(dev);
++	bool target_dat0_high = !!state;
++	bool dat0_high;
++
++	timeout_us = DIV_ROUND_UP(timeout_us, 10); /* check every 10 us */
++	while (timeout_us--) {
++		dat0_high = !!(sh_sdhi_readw(host, SDHI_INFO2) & INFO2_SDDAT0);
++		if (dat0_high == target_dat0_high)
++			return 0;
++		udelay(10);
++	}
++
++	return -ETIMEDOUT;
++}
++
+ static const struct dm_mmc_ops sh_sdhi_dm_ops = {
+ 	.send_cmd	= sh_sdhi_dm_send_cmd,
+ 	.set_ios	= sh_sdhi_dm_set_ios,
++	.wait_dat0	= sh_sdhi_dm_wait_dat0,
+ };
+ 
+ static int sh_sdhi_dm_bind(struct udevice *dev)
+-- 
+2.25.1
+
